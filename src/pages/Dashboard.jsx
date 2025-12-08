@@ -1,7 +1,18 @@
 import { PlusIcon, UploadCloudIcon } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { dummyResumeData } from "../assets/assets";
 
 const Dashboard = () => {
+  const [allResumes, setAllResumes] = useState([]);
+
+  const loadAllResumes = async () => {
+    setAllResumes(dummyResumeData);
+  };
+
+  useEffect(() => {
+    loadAllResumes();
+  }, []);
+
   return (
     <div>
       <div className=" max-w-7xl mx-auto px-4 py-8">
@@ -24,6 +35,8 @@ const Dashboard = () => {
             </p>
           </button>
         </div>
+
+        <hr className=" border-slate-300 my-6 sm:w-[305px]" />
       </div>
     </div>
   );
