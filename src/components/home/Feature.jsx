@@ -1,5 +1,6 @@
 import React from "react";
 import { Zap } from "lucide-react";
+import Title from "./Title";
 
 const Feature = () => {
   const [isHover, setIsHover] = React.useState(false);
@@ -13,8 +14,12 @@ const Feature = () => {
         <Zap width={14} />
         <span>Simple Process</span>
       </div>
+      <Title
+        title="Build your resume"
+        description="Our streallined process helps you create a professional resume in minutes with intelligent AI-powered tools and features."
+      />
 
-      <div className="flex flex-col md:flex-row items-center justify-center">
+      <div className="flex flex-col md:flex-row items-center xl:-mt-10 justify-center">
         <img
           className="max-w-2xl w-full xl:-ml-32"
           src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/features/group-image-1.png"
