@@ -43,7 +43,10 @@ const Dashboard = () => {
         </p>
 
         <div className="flex gap-4">
-          <button className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer">
+          <button
+            onClick={() => setShowCreateResume(true)}
+            className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
+          >
             <PlusIcon className=" size-11 transition-all duration-300 p-2.5 bg-gradient-to-br from-indigo-300 to-indigo-500 text-white rounded-full" />
             <p className=" text-sm group-hover:text-indigo-600 transition-all duration-300">
               Create Resume
@@ -103,7 +106,7 @@ const Dashboard = () => {
           <form
             onSubmit={createResume}
             onClick={() => setShowCreateResume(false)}
-            className="fixed inset-0 bg-black/70 backdrop-blur opacity-50 z-10 flex items-center justify-center"
+            className="fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 z-10 flex items-center justify-center"
           >
             <div
               onClick={(e) => e.stopPropagation()}
@@ -111,6 +114,8 @@ const Dashboard = () => {
             >
               <h2 className=" text-xl font-bold mb-4">Create a Resume</h2>
               <input
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
                 type="text"
                 placeholder="Enter resume title"
                 className=" w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600"
@@ -124,6 +129,39 @@ const Dashboard = () => {
                 className=" absolute top-4 right-4 text-slate-400 hover:text-slate-600 cursor-pointer transition-colors"
                 onClick={() => {
                   setShowCreateResume(false);
+                  setTitle("");
+                }}
+              />
+            </div>
+          </form>
+        )}
+
+        {showUploadResume && (
+          <form
+            onSubmit={uploadResume}
+            onClick={() => setShowUploadResume(false)}
+            className="fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 z-10 flex items-center justify-center"
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className=" relative bg-slate-50 border shadow-md rounded-lg w-full max-w-sm p-6"
+            >
+              <h2 className=" text-xl font-bold mb-4">Upload Resume</h2>
+              <input
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
+                type="text"
+                placeholder="Enter resume title"
+                className=" w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600"
+                required
+              />
+              <button className=" w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
+                Upload Resume
+              </button>
+              <XIcon
+                className=" absolute top-4 right-4 text-slate-400 hover:text-slate-600 cursor-pointer transition-colors"
+                onClick={() => {
+                  setShowUploadResume(false);
                   setTitle("");
                 }}
               />
