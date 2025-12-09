@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { dummyResumeData } from "../assets/assets";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"];
@@ -18,8 +19,16 @@ const Dashboard = () => {
   const [resume, setResume] = useState(null);
   const [editResumeId, setEditResumeId] = useState("");
 
+  const navigate = useNavigate();
+
   const loadAllResumes = async () => {
     setAllResumes(dummyResumeData);
+  };
+
+  const createResume = async (event) => {
+    event.preventDefault();
+    setShowCreateResume(false);
+    navigate("/app/builder/res123");
   };
 
   useEffect(() => {
