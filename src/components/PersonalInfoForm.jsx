@@ -22,7 +22,7 @@ const PersonalInfoForm = ({
 
       <div className="flex items-center gap-2">
         {/** si l'image de l'utilisateur est deja dans le database on l'affiche sinon on motre une icon et on demande a l'user de d'entrer son image */}
-        <label htmlFor="">
+        <label>
           {data.image ? (
             <img
               src={
@@ -54,7 +54,7 @@ const PersonalInfoForm = ({
               <input
                 type="checkbox"
                 className=" sr-only peer"
-                onchange={() => setRemoveBackground((prev) => !prev)}
+                onChange={() => setRemoveBackground((prev) => !prev)}
                 checked={removeBackground}
               />
 
