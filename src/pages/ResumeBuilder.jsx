@@ -81,6 +81,16 @@ const ResumeBuilder = () => {
                   }%`,
                 }}
               />
+
+              {/**Section de navigation */}
+              <div className=" flex justify-between items-center mb-6 border-b border-gray-300 py-1">
+                <div className=""></div>
+                <div className=" flex items-center">
+                  {activeSectionIndex !== 0 && (
+                    <button className=" flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all"></button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 
