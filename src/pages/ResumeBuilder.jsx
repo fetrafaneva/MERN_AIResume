@@ -13,6 +13,7 @@ import {
   User,
 } from "lucide-react";
 import { useEffect } from "react";
+import PersonalInfoForm from "../components/PersonalInfoForm";
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
@@ -120,7 +121,19 @@ const ResumeBuilder = () => {
 
               {/**Contenu du formulaire */}
               <div className=" space-y-6">
-                {activeSection.id === "personal" && <div className=""></div>}
+                {activeSection.id === "personal" && (
+                  <PersonalInfoForm
+                    data={resumeData.personal_info}
+                    onchange={(data) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        personal_info: data,
+                      }))
+                    }
+                    removeBackground={removeBackground}
+                    setRemoveBackground={setRemoveBackground}
+                  />
+                )}
               </div>
             </div>
           </div>
