@@ -1,4 +1,4 @@
-import { Layout } from "lucide-react";
+import { Check, Layout } from "lucide-react";
 import React, { useState } from "react";
 import { preview } from "vite";
 
@@ -38,6 +38,32 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
         <Layout size={14} />
         <span className=" max-sm:hidden">Template</span>
       </button>
+      {isOpen && (
+        <div className=" absolute top-full w-xs p-3 mt-2 space-y-3 z-10 bg-white rounded-md border-gray-200 shadow-sm">
+          {templates.map((template) => (
+            <div
+              key={template.id}
+              onClick={() => {
+                onchange(template.id);
+                setIsOpen(false);
+              }}
+              className={`relative p-3 border rounded-md cursor-pointer transition-all ${
+                selectedTemplate === template.id
+                  ? " border-blue-400 bg-blue-100"
+                  : "border-gray-300 hover:border-gray-400 hover:bg-gray-100"
+              }`}
+            >
+              {selectedTemplate === template.id && (
+                <div className="absolute top-2 ring-2">
+                  <div className="size-5 bg-blue-400 rounded-full flex items-center justify-center">
+                    <Check className="w-3 h-3 text-white" />
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
