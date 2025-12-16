@@ -31,6 +31,7 @@ const ColorPicker = ({ selectedColor, onChange }) => {
               key={color.value}
               onClick={() => {
                 onChange(color.value);
+                setIsOpen(false);
               }}
             >
               <div
