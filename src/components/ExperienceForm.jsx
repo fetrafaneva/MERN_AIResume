@@ -22,6 +22,12 @@ const ExperienceForm = ({ data, onChange }) => {
     onChange(updated);
   };
 
+  const updateExperience = (index, field, value) => {
+    const updated = [...data];
+    updated[index] = { ...updated[index], [field]: value };
+    onChange(updated);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
