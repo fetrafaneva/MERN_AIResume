@@ -8,9 +8,9 @@ const ResumePreview = ({ data, template, accentColor, classes = "" }) => {
     switch (template) {
       case "modern":
         return <ModernTemplate data={data} accentColor={accentColor} />;
-      case "Minimal":
+      case "minimal":
         return <MinimalTemplate data={data} accentColor={accentColor} />;
-      case "Minimal-image":
+      case "minimal-image":
         return <MinimalImageTemplate data={data} accentColor={accentColor} />;
 
       default:
