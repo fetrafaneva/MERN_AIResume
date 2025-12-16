@@ -19,6 +19,15 @@ const ProfessionalSummaryForm = ({ data, onChange, setResumeData }) => {
           AI Enhance
         </button>
       </div>
+
+      <div className="mt-6">
+        <textarea
+          name=""
+          id=""
+          className=" w-full p-3 px-4 mt-2 border text-sm border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors resize-none"
+          placeholder="Write a compelling professional sumary tha highlights your key strengths and career objectives..."
+        />
+      </div>
     </div>
   );
 };
