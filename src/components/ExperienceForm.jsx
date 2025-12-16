@@ -14,6 +14,14 @@ const ExperienceForm = ({ data, onChange }) => {
     onChange([...data, newExperience]);
   };
 
+  const removeExperience = (index) => {
+    {
+      /** index représente la position de l’élément à supprimer dans le tableau data */
+    }
+    const updated = data.filter((_, i) => i !== index);
+    onChange(updated);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
