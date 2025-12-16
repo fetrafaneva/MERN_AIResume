@@ -1,6 +1,19 @@
+import { Plus } from "lucide-react";
 import React from "react";
 
 const ExperienceForm = ({ data, onChange }) => {
+  const addExperience = () => {
+    const newExperience = {
+      company: "",
+      position: "",
+      start_date: "",
+      end_date: "",
+      description: "",
+      is_current: false,
+    };
+    onChange([...data, newExperience]);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -11,9 +24,9 @@ const ExperienceForm = ({ data, onChange }) => {
           </h3>
           <p className="text-sm text-gray-500">Add your job experience</p>
         </div>
-        <button className="flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50">
-          <Sparkles className="size-4" />
-          AI Enhance
+        <button className="flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors ">
+          <Plus className="size-4" />
+          Add Experience
         </button>
       </div>
     </div>
