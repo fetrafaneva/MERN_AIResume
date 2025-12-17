@@ -1,4 +1,4 @@
-import { Briefcase, Plus } from "lucide-react";
+import { Briefcase, Plus, Trash, Trash2 } from "lucide-react";
 import React from "react";
 
 const ExperienceForm = ({ data, onChange }) => {
@@ -54,7 +54,24 @@ const ExperienceForm = ({ data, onChange }) => {
           <p className="text-sm">Click "Add Experience" to get started.</p>
         </div>
       ) : (
-        <div className=""></div>
+        <div className="space-y-4">
+          {data.map((experience, index) => (
+            <div
+              key={index}
+              className=" p-4 border border-gray-200 rounded-lg space-y-3"
+            >
+              <div className="flex justify-between items-start">
+                <h4>Experience #{index + 1}</h4>
+                <button
+                  onClick={() => removeExperience(index)}
+                  className=" text-red-500 hover:text-red-700 transition-colors"
+                >
+                  <Trash2 className="size-4" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
