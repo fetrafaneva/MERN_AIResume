@@ -69,6 +69,18 @@ const ExperienceForm = ({ data, onChange }) => {
                   <Trash2 className="size-4" />
                 </button>
               </div>
+
+              <div className="grid md:grid-cols-2 gap-3">
+                <input
+                  value={experience.company || ""}
+                  onChange={(e) =>
+                    updateExperience(index, "company", e.target.value)
+                  }
+                  type="text"
+                  placeholder="Company Name"
+                  className="px-3 py-2 text-sm rounded-lg"
+                />
+              </div>
             </div>
           ))}
         </div>
