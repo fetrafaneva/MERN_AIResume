@@ -40,7 +40,7 @@ const ExperienceForm = ({ data, onChange }) => {
         </div>
         <button
           onClick={addExperience}
-          className="flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors "
+          className="flex items-center gap-2 px-3 py-1 text-sm bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors "
         >
           <Plus className="size-4" />
           Add Experience
@@ -111,7 +111,7 @@ const ExperienceForm = ({ data, onChange }) => {
                 />
               </div>
 
-              <label>
+              <label className="flex items-center gap-2">
                 <input
                   type="checkbox"
                   checked={experience.is_current || false}
