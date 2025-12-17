@@ -80,6 +80,16 @@ const ExperienceForm = ({ data, onChange }) => {
                   placeholder="Company Name"
                   className="px-3 py-2 text-sm rounded-lg"
                 />
+
+                <input
+                  value={experience.position || ""}
+                  onChange={(e) =>
+                    updateExperience(index, "position", e.target.value)
+                  }
+                  type="text"
+                  placeholder="Job Title"
+                  className="px-3 py-2 text-sm rounded-lg"
+                />
               </div>
             </div>
           ))}
