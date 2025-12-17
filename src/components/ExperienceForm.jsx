@@ -110,6 +110,24 @@ const ExperienceForm = ({ data, onChange }) => {
                   className="px-3 py-2 text-sm rounded-lg disabled:bg-gray-100"
                 />
               </div>
+
+              <label>
+                <input
+                  type="checkbox"
+                  checked={experience.is_current || false}
+                  onChange={(e) => {
+                    updateExperience(
+                      index,
+                      "is_current",
+                      e.target.checked ? true : false
+                    );
+                  }}
+                  className=" rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-sm text-gray-700">
+                  Currently working here
+                </span>
+              </label>
             </div>
           ))}
         </div>
