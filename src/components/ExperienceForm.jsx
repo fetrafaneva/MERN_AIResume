@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { Briefcase, Plus } from "lucide-react";
 import React from "react";
 
 const ExperienceForm = ({ data, onChange }) => {
@@ -38,11 +38,24 @@ const ExperienceForm = ({ data, onChange }) => {
           </h3>
           <p className="text-sm text-gray-500">Add your job experience</p>
         </div>
-        <button className="flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors ">
+        <button
+          onClick={addExperience}
+          className="flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors "
+        >
           <Plus className="size-4" />
           Add Experience
         </button>
       </div>
+
+      {data.length === 0 ? (
+        <div className="text-center py-8 text-gray-500">
+          <Briefcase className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+          <p>No work experience added yet</p>
+          <p className="text-sm">Click "Add Experience" to get started.</p>
+        </div>
+      ) : (
+        <div className=""></div>
+      )}
     </div>
   );
 };
