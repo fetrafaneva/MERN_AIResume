@@ -1,4 +1,4 @@
-import { GraduationCap } from "lucide-react";
+import { GraduationCap, Plus, Trash2 } from "lucide-react";
 import React from "react";
 
 const EducationForm = ({ data, onChange }) => {
@@ -10,7 +10,7 @@ const EducationForm = ({ data, onChange }) => {
       graduation_date: "",
       gpa: "",
     };
-    onChange([...data, newExperience]);
+    onChange([...data, newEducation]);
   };
 
   const removeEducation = (index) => {
