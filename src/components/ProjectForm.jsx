@@ -57,7 +57,23 @@ const ProjectForm = ({ data, onChange }) => {
               </button>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-3"></div>
+            <div className="grid md:grid-cols-2 gap-3">
+              <input
+                value={project.name || ""}
+                onChange={(e) => updateProject(index, "name", e.target.value)}
+                type="text"
+                placeholder="Project Name"
+                className="px-3 py-2 text-sm rounded-lg"
+              />
+
+              <input
+                value={project.type || ""}
+                onChange={(e) => updateProject(index, "type", e.target.value)}
+                type="text"
+                placeholder="Project Type"
+                className="px-3 py-2 text-sm rounded-lg"
+              />
+            </div>
           </div>
         ))}
       </div>
