@@ -69,7 +69,11 @@ const SkillsForm = ({ data, onChange }) => {
           ))}
         </div>
       ) : (
-        <div className=""></div>
+        <div className=" text-center py-6 text-gray-500">
+          <Sparkles className="w-10 h-10 mx-auto mb-2 text-gray-300" />
+          <p> No skills added yet.</p>
+          <p className=" text-sm">Add your technical and soft skills above.</p>
+        </div>
       )}
     </div>
   );
