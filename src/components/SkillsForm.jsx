@@ -1,3 +1,4 @@
+import { Plus } from "lucide-react";
 import React, { useState } from "react";
 
 const SkillsForm = ({ data, onChange }) => {
@@ -41,6 +42,13 @@ const SkillsForm = ({ data, onChange }) => {
           value={newSkill}
           onKeyDown={handleKeyPress}
         />
+        <button
+          onClick={addSkill}
+          disabled={!newSkill.trim}
+          className="flex items-center gap-2 px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <Plus className="size-4" />
+        </button>
       </div>
     </div>
   );
