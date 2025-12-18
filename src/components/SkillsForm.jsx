@@ -32,7 +32,16 @@ const SkillsForm = ({ data, onChange }) => {
         </p>
       </div>
 
-      <div className=""></div>
+      <div className="">
+        <input
+          type="text"
+          placeholder="Enter a skill (e.g., JavaScript, Project Management"
+          className="flex-1 px-3 text-sm"
+          onChange={(e) => setNewSkill(e.target.value)}
+          value={newSkill}
+          onKeyDown={handleKeyPress}
+        />
+      </div>
     </div>
   );
 };
