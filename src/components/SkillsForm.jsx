@@ -10,6 +10,16 @@ const SkillsForm = ({ data, onChange }) => {
     }
   };
 
+  const removeSkill = (indexToRemove) => {
+    onChange(data.filter((_, index) => index !== indexToRemove));
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addSkill();
+    }
+  };
   return <div>SkillsForm</div>;
 };
 
