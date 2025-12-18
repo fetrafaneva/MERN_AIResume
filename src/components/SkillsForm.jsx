@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { Plus, Sparkles, X } from "lucide-react";
 import React, { useState } from "react";
 
 const SkillsForm = ({ data, onChange }) => {
@@ -50,6 +50,27 @@ const SkillsForm = ({ data, onChange }) => {
           <Plus className="size-4" />
         </button>
       </div>
+
+      {data.length > 0 ? (
+        <div className="flex flex-wrap gap-2">
+          {data.map(() => (
+            <span
+              key={index}
+              className=" flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+            >
+              {skill}
+              <button
+                onClick={() => removeSkill(index)}
+                className=" ml-1 hover:bg-blue-200 rounded-full p-0.5 transition-colors"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </span>
+          ))}
+        </div>
+      ) : (
+        <div className=""></div>
+      )}
     </div>
   );
 };
