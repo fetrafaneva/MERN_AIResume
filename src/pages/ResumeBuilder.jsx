@@ -6,6 +6,7 @@ import {
   Briefcase,
   ChevronLeft,
   ChevronRight,
+  DownloadIcon,
   EyeIcon,
   EyeOff,
   FileText,
@@ -240,13 +241,16 @@ const ResumeBuilder = () => {
                     <Share2Icon className="size-4" />
                   </button>
                 )}
-                <button>
+                <button className="flex items-center p-2 px-4 gap-2 text-xs bg-gradient-to-br from-purple-100 to-purple-200 text-purple-600 ring-purple-300 rounded-lg hover:ring transition-colors">
                   {resumeData.public ? (
                     <EyeIcon className="size-4" />
                   ) : (
                     <EyeOff className="size-4" />
                   )}
                   {resumeData.public ? "Public" : "private"}
+                </button>
+                <button className="flex items-center gap-2 px-6 py-2 text-xs bg-gradient-to-br from-green-100 to-green-200 text-green-600 rounded-lg ring-green-300 hover:ring transition-colors">
+                  <DownloadIcon className="size-4" /> Download
                 </button>
               </div>
             </div>
