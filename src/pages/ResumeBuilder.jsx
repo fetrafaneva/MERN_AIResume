@@ -70,6 +70,10 @@ const ResumeBuilder = () => {
     loadExistingResume();
   }, []);
 
+  const changeResumeVisibility = async () => {
+    setResumeData({ ...resumeData, public: !resumeData.public });
+  };
+
   return (
     <div>
       <div className="max-w-7xl mx-auto px-4 py-6">
