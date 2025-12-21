@@ -13,7 +13,7 @@ const generateToken = (userId) => {
 // POST: /api/users/register
 export const registerUser = async (req, res) => {
   try {
-    const {} = req.body;
+    const { name, email, password } = req.body;
 
     // verifier si les champs obligatoire sont remplies
     if (!name || !email || !password) {
@@ -41,6 +41,33 @@ export const registerUser = async (req, res) => {
     return res
       .status(201)
       .json({ message: "User created successfully", token, user: newUser });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
+
+// controller for user login
+// POST: /api/users/login
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // verifier si l'utilisateur existe
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    // check if password is correct
+    if (!user.comparePassword(password)) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    // return success message
+    const token = generateToken(user._id);
+    user.password = undefined;
+
+    return res.status(200).json({ message: "Login successfully", token, user });
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
