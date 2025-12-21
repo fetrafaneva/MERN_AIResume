@@ -73,7 +73,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
-// controller for getting use by id
+// controller for getting user by id
 // GET: /api/users/data
 export const getUserById = async (req, res) => {
   try {
