@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout";
@@ -32,6 +32,10 @@ const App = () => {
       console.log(error.message);
     }
   };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <>
