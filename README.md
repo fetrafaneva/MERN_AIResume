@@ -89,5 +89,57 @@ During this project, I gained valuable technical skills and a deeper understandi
 
 - **Prompt Design**: Writing effective prompts helped me understand how to get relevant and useful AI-generated results.
 
+### Image Upload with ImageKit:
+
+- **Cloud Media Handling**: I learned how to upload, store, and optimize images using ImageKit.
+
+- **Performance Awareness**: This improved my understanding of image optimization and faster content delivery.
+
 ### 📈 Overall Growth:
 
+Ehach part of tis project helped me understand more about building we apps, managing complex information, and improving user experience. It was more than just making a tool. It was about solving problems, learning new things, and improving my skills for future work.
+
+## How can it be improved?
+
+- Implement more AI templates
+- Add responsive design improvements
+- Add unit & integration tests
+
+## 🚦 Running the Project
+
+To run the project in your local environment, follow these steps:
+
+1. Clone the repo `git clone https://github.com/fetrafaneva/MERN_AIResume.git`
+2. Install dependencies:
+   ### Frontend:
+       `cd client`
+       `npm install`
+       `npm run dev`
+   
+   ### Backend:
+       `cd server`
+       `npm install`
+       `npm run server`        
+
+3. Environment variables:
+
+Create .env file with your keys:
+   ### Frontend:
+        VITE_BASE_URL = "Your back server Link ex: http://localhost:3000"
+
+   ### Backend:
+        JWT_SECRET = "any_random_secret"
+        
+        MONGODB_URI = "Your_MongoDBURI"
+        
+        IMAGEKIT_PRIVATE_KEY = "Your_ImageKit_key"
+        
+        OPENAI_API_KEY = "Your_openai_Api_Key"
+        
+        OPENAI_BASE_URL = "Your_Openai_Base_Url"
+        
+        OPENAI_MODEL = "Your_Openai_Model"
+
+## 🍿 Video
+
+https://github.com/
