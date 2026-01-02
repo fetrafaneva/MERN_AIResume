@@ -105,7 +105,7 @@ Ehach part of tis project helped me understand more about building we apps, mana
 - Add responsive design improvements
 - Add unit & integration tests
 
-## 🚦 Running the Project
+## Running the Project
 
 To run the project in your local environment, follow these steps:
 
