@@ -140,6 +140,6 @@ Create .env file with your keys:
         
         OPENAI_MODEL = "Your_Openai_Model"
 
-## 🍿 Video
+## 🍿 Demo / Preview
 
 https://github.com/
