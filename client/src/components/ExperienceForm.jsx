@@ -1,8 +1,12 @@
 import { Briefcase, Plus, Sparkles, Trash, Trash2 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const ExperienceForm = ({ data, onChange }) => {
   const addExperience = () => {
+    const { token } = useSelector((state) => state.auth);
+    const [generatingIndex, setGeneratingIndex] = useState(-1);
+
     const newExperience = {
       company: "",
       position: "",
@@ -26,6 +30,12 @@ const ExperienceForm = ({ data, onChange }) => {
     const updated = [...data];
     updated[index] = { ...updated[index], [field]: value };
     onChange(updated);
+  };
+
+  const generateDescription = async (index) => {
+    setGeneratingIndex(index);
+    const experience = data[index];
+    const prompt = `enhance this job description ${experience.description} for the position of ${experience.position} at ${experience.company}.`;
   };
 
   return (
