@@ -1,4 +1,4 @@
-# 🥷🏽 NinjaSketch
+# 🥷🏽 MERN_AIResume
 
 This project is a full-stack web app that allows users to create, customize, and generate professional resumes using AI assistance, all in a clean and interactive interface. It uses MongoDB, Express, React, and Node.js.
 
