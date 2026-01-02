@@ -1,4 +1,11 @@
-import { Briefcase, Plus, Sparkles, Trash, Trash2 } from "lucide-react";
+import {
+  Briefcase,
+  Loader2,
+  Plus,
+  Sparkles,
+  Trash,
+  Trash2,
+} from "lucide-react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import api from "../configs/api";
@@ -159,8 +166,20 @@ const ExperienceForm = ({ data, onChange }) => {
                   <label className=" text-sm font-medium text-gray-700">
                     Job Description
                   </label>
-                  <button className="flex items-center gap-1 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50">
-                    <Sparkles className="w-3 h-3" />
+                  <button
+                    onClick={() => generateDescription(index)}
+                    disabled={
+                      generatingIndex === index ||
+                      !experience.position ||
+                      !experience.company
+                    }
+                    className="flex items-center gap-1 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50"
+                  >
+                    {generatingIndex === index ? (
+                      <Loader2 className=" w-3 h-3 animate-spin" />
+                    ) : (
+                      <Sparkles className="w-3 h-3" />
+                    )}
                     Enhance with AI
                   </button>
                 </div>
