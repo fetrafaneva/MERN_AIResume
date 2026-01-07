@@ -54,13 +54,13 @@ const Hero = () => {
             >
               Login
             </Link>
-            <Linl
+            <Link
               to="/app"
               className="hidden md:block px-8 py-2 bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white"
               hidden={!user}
             >
               Dashboard
-            </Linl>
+            </Link>
           </div>
 
           <button
