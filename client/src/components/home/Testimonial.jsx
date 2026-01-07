@@ -9,24 +9,30 @@ const Testimonial = () => {
         "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200",
       name: "Briar Martin",
       handle: "@neilstellar",
+      comment:
+        "This platform completely changed the way I work. Super intuitive!",
     },
     {
       image:
         "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200",
       name: "Avery Johnson",
       handle: "@averywrites",
+      comment:
+        "Amazing experience! The UI is clean and the performance is great.",
     },
     {
       image:
         "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=200&auto=format&fit=crop&q=60",
       name: "Jordan Lee",
       handle: "@jordantalks",
+      comment: "Customer support was fast and helpful. Highly recommended.",
     },
     {
       image:
         "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=60",
-      name: "Avery Johnson",
-      handle: "@averywrites",
+      name: "Sam Carter",
+      handle: "@samcodes",
+      comment: "A solid product with great attention to detail. Loved it!",
     },
   ];
 
@@ -58,9 +64,7 @@ const Testimonial = () => {
           <span className="text-xs text-slate-500">{card.handle}</span>
         </div>
       </div>
-      <p className="text-sm py-4 text-gray-800">
-        Radiant made undercutting all of our competitors an absolute breeze.
-      </p>
+      <p className="text-sm py-4 text-gray-800">{card.comment}</p>
     </div>
   );
 
