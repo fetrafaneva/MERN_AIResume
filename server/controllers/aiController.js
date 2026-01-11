@@ -13,7 +13,7 @@ export const enhanceProfesssionalSummary = async (req, res) => {
     }
 
     const response = await ai.chat.completions.create({
-      model: process.env.OPENAI_MODEL,
+      model: "c",
       messages: [
         {
           role: "system",
