@@ -12,6 +12,7 @@ export const enhanceProfesssionalSummary = async (req, res) => {
       return res.status(400).json({ message: "Missing required field" });
     }
 
+    console.log("Envoi du prompt à OpenAI...");
     const response = await ai.chat.completions.create({
       model: process.env.OPENAI_MODEL,
       messages: [
@@ -26,8 +27,12 @@ export const enhanceProfesssionalSummary = async (req, res) => {
         },
       ],
     });
+    console.log("Réponse reçue d’OpenAI:", response);
 
     const enhancedContent = response.choices[0].message.content;
+
+    console.log("Réponse OpenAI:", enhancedContent);
+
     return res.status(200).json({ enhancedContent });
   } catch (error) {
     return res.status(400).json({ message: error.message });

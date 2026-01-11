@@ -26,6 +26,8 @@ const ProfessionalSummaryForm = ({ data, onChange, setResumeData }) => {
     } finally {
       setIsGenerating(false);
     }
+    console.log("Token:", token);
+    console.log("Prompt envoyé:", data);
   };
 
   return (
