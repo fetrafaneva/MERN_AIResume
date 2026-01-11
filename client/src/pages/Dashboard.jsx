@@ -33,7 +33,7 @@ const Dashboard = () => {
 
   const loadAllResumes = async () => {
     try {
-      const { data } = await api.post(
+      const { data } = await api.get(
         "/api/users/resumes",
 
         { headers: { Authorization: token } }
