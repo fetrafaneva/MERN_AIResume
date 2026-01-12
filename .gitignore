@@ -1,0 +1,39 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Node modules (par sécurité, même si chaque dossier a son propre node_modules)
+node_modules/
+
+# Build / output
+dist/
+dist-ssr/
+build/
+*.local
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Editor / OS files
+.vscode/
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Mac / Linux swap files
+*.swp
+*.swo
+
+# Coverage reports
+coverage/
