@@ -1,8 +1,14 @@
-// controller for enhancing a resume's professional summary
-
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import "dotenv/config";
 import Resume from "../models/Resume.js";
 import ai from "../configs/ai.js";
 
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.5-flash", // ✅ GARANTI
+});
+
+// controller for enhancing a resume's professional summary
 // POST: /api/ai/enhance-pro-sum
 export const enhanceProfesssionalSummary = async (req, res) => {
   try {
@@ -12,24 +18,13 @@ export const enhanceProfesssionalSummary = async (req, res) => {
       return res.status(400).json({ message: "Missing required field" });
     }
 
-    const response = await ai.chat.completions.create({
-      model: "c",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are an expert in resume writing. Your task is to enhance the professional summary of a resume. The summary should be 1-2 sentences also highlighting key skills, experience, and career oblectives. Make it compelling and ATS-friendly. and only return text no options or anything else",
-        },
-        {
-          role: "user",
-          content: userContent,
-        },
-      ],
-    });
-
-    const enhancedContent = response.choices[0].message.content;
+    const result = await model.generateContent(
+      `Enhance this professional summary: ${userContent}. You are an expert in resume writing. Your task is to enhance the professional summary of a resume. The summary should be 1-2 sentences also highlighting key skills, experience, and career oblectives. Make it compelling and ATS-friendly. and only return text no options or anything else`
+    );
+    const enhancedContent = result.response.text();
     return res.status(200).json({ enhancedContent });
   } catch (error) {
+    console.error("Error generating summary:", error);
     return res.status(400).json({ message: error.message });
   }
 };
