@@ -1,32 +1,29 @@
-// testOpenAI.js
-import OpenAI from "openai";
-import "dotenv/config";
-
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-const testAI = async () => {
+export const enhanceProfesssionalSummary = async (req, res) => {
   try {
-    const response = await client.chat.completions.create({
-      model: "c",
+    const { userContent } = req.body;
+
+    if (!userContent) {
+      return res.status(400).json({ message: "Missing required field" });
+    }
+
+    const response = await ai.chat.completions.create({
+      model: "gemini-2.5-flash",
       messages: [
         {
           role: "system",
           content:
-            "You are an expert resume writer. Enhance professional summaries.",
+            "You are an expert in resume writing. Your task is to enhance the professional summary of a resume. The summary should be 1-2 sentences also highlighting key skills, experience, and career oblectives. Make it compelling and ATS-friendly. and only return text no options or anything else",
         },
         {
           role: "user",
-          content: "Write a short professional summary for a MERN developer",
+          content: userContent,
         },
       ],
     });
 
-    console.log("Réponse AI :", response.choices[0].message.content);
-  } catch (err) {
-    console.error("Erreur AI :", err);
+    const enhancedContent = response.choices[0].message.content;
+    return res.status(200).json({ enhancedContent });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
   }
 };
-
-testAI();

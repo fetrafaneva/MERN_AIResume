@@ -8,7 +8,7 @@ import {
 
 const aiRouter = express.Router();
 
-aiRouter.post("/enhance-pro-sum", protect, enhanceProfesssionalSummary);
+aiRouter.post("/enhance-pro-sum", enhanceProfesssionalSummary);
 aiRouter.post("/enhance-job-desc", protect, enhanceJobDescription);
 aiRouter.post("/upload-resume", protect, UploadResume);
 
