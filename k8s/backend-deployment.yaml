@@ -2,51 +2,75 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
+
 spec:
   replicas: 1
+
   selector:
     matchLabels:
       app: backend
+
   template:
     metadata:
       labels:
         app: backend
+
     spec:
       containers:
-      - name: backend
-        image: us-central1-docker.pkg.dev/tpcluster/airesume/backend:latest
-        ports:
-        - containerPort: 3000
+        - name: backend
+          image: us-central1-docker.pkg.dev/tpcluster/airesume/backend:latest
 
-        env:
-          - name: MONGO_URI
-            value: mongodb://mongodb-service:27017/resumedb
+          ports:
+            - containerPort: 3000
 
-          - name: JWT_SECRET
-            value: any_random_secret
+          env:
+            - name: MONGO_URI
+              value: mongodb://mongodb-service:27017/resumedb
 
-          - name: IMAGEKIT_PUBLIC_KEY
-            value: xxxx
+            - name: OPENAI_BASE_URL
+              value: https://generativelanguage.googleapis.com/v1beta/openai/
 
-          - name: IMAGEKIT_PRIVATE_KEY
-            value: private_1vWmCNoJVSTa/V9LGtMgbTa7B4g=
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: jwt-secret
 
-          - name: IMAGEKIT_URL_ENDPOINT
-            value: https://ik.imagekit.io/xxxx
+            - name: IMAGEKIT_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: imagekit-public-key
 
-          - name: OPENAI_API_KEY
-            value: xxxxx
+            - name: IMAGEKIT_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: imagekit-private-key
 
-          - name: GEMINI_API_KEY
-            value: xxxxx
+            - name: IMAGEKIT_URL_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: imagekit-url-endpoint
 
-          - name: OPENAI_BASE_URL
-            value: https://generativelanguage.googleapis.com/v1beta/openai/
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: openai-api-key
 
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "256Mi"
-          limits:
-            cpu: "200m"
-            memory: "512Mi"
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: gemini-api-key
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+
+            limits:
+              cpu: "200m"
+              memory: "512Mi"
