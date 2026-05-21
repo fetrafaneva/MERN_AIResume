@@ -9,7 +9,6 @@ import {
   XIcon,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { dummyResumeData } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import api from "../configs/api";
