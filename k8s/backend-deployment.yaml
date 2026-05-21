@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: backend
+
+  template:
+    metadata:
+      labels:
+        app: backend
+
+    spec:
+      containers:
+        - name: backend
+          image: us-central1-docker.pkg.dev/tpcluster/airesume/backend:latest
+
+          ports:
+            - containerPort: 3000
+
+          env:
+            - name: MONGO_URI
+              value: mongodb://mongodb-service:27017/resumedb
+
+            - name: OPENAI_BASE_URL
+              value: https://generativelanguage.googleapis.com/v1beta/openai/
+
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: jwt-secret
+
+            - name: IMAGEKIT_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: imagekit-public-key
+
+            - name: IMAGEKIT_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: imagekit-private-key
+
+            - name: IMAGEKIT_URL_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: imagekit-url-endpoint
+
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: openai-api-key
+
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: gemini-api-key
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+
+            limits:
+              cpu: "200m"
+              memory: "512Mi"

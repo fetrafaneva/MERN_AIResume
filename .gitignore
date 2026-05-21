@@ -37,3 +37,9 @@ build/
 
 # Coverage reports
 coverage/
+
+.env
+.env.local
+service-account.json
+node_modules
+.mongodb
