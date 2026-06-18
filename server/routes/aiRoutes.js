@@ -1,8 +1,8 @@
 import express from "express";
 import protect from "../middlwares/authMiddleware.js";
 import {
-  enhanceJobDescription,
   enhanceProfesssionalSummary,
+  enhanceJobDescription,
   UploadResume,
 } from "../controllers/aiController.js";
 
