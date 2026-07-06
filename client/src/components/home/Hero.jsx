@@ -17,16 +17,28 @@ const Hero = () => {
           </a>
 
           <div className="hidden md:flex items-center gap-8 transition duration-500 text-slate-800">
-            <a href="#" className="hover:text-green-600 transition">
+            <a
+              href="#"
+              className="text-sm font-medium hover:text-green-600 transition"
+            >
               Home
             </a>
-            <a href="#features" className="hover:text-green-600 transition">
+            <a
+              href="#features"
+              className="text-sm font-medium hover:text-green-600 transition"
+            >
               Features
             </a>
-            <a href="#testimonials" className="hover:text-green-600 transition">
+            <a
+              href="#testimonials"
+              className="text-sm font-medium hover:text-green-600 transition"
+            >
               Testimonials
             </a>
-            <a href="#cta" className="hover:text-green-600 transition">
+            <a
+              href="#cta"
+              className="text-sm font-medium hover:text-green-600 transition"
+            >
               Contact
             </a>
           </div>
@@ -34,10 +46,10 @@ const Hero = () => {
           <div className="flex gap-2">
             <Link
               to="/app?state=register"
-              className="hidden md:block px-6 py-2 bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white"
+              className="hidden md:block px-5 py-2 text-sm  bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white"
               hidden={user}
             >
-              Get started
+              Se connecter
             </Link>
             <Link
               to="/app?state=login"
@@ -105,16 +117,15 @@ const Hero = () => {
 
           {/* Headline + CTA */}
           <h1 className="text-5xl md:text-6xl font-semibold max-w-5xl text-center mt-35 md:leading-[70px]">
-            Land your dream job with{" "}
+            Décrochez l'emploi de vos rêves grâce à des{" "}
             <span className=" bg-gradient-to-r from-green-700 to-green-600 bg-clip-text text-transparent text-nowrap">
-              AI-powered{" "}
+              CV intelligents{" "}
             </span>{" "}
-            resumes.
           </h1>
 
           <p className="max-w-md text-center text-base my-7">
-            Create, edit and download professional resumes with AI-powered
-            assistance.
+            Créez, modifiez et téléchargez des CV professionnels en quelques
+            clics.
           </p>
 
           {/* CTA Buttons */}
