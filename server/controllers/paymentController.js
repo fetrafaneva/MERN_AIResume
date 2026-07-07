@@ -1,6 +1,5 @@
 import PaymentRequest from "../models/PaymentRequest.js";
 import User from "../models/User.js";
-import { PREMIUM_PLANS } from "../configs/plans.js";
 import { PREMIUM_PLANS, PAYMENT_NUMBERS } from "../configs/plans.js";
 
 // ============================
