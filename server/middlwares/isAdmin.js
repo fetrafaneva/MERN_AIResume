@@ -14,7 +14,6 @@ const isAdmin = async (req, res, next) => {
         .json({ message: "Accès réservé aux administrateurs" });
     }
 
-    req.user = user; // pratique pour la suite (ex: processedBy)
     next();
   } catch (error) {
     return res.status(500).json({ message: "Erreur serveur" });
