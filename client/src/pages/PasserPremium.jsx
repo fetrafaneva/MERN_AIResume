@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
-import api from "../configs/api"; // ajuste le chemin si besoin
+import api from "../configs/api.js"; // ajuste le chemin si besoin
 
 const PROVIDER_LABELS = {
   mvola: "MVola",
@@ -11,23 +12,27 @@ const PROVIDER_LABELS = {
 
 const PasserPremium = () => {
   const { user } = useSelector((state) => state.auth);
+  const location = useLocation();
 
   const [config, setConfig] = useState(null);
   const [myRequest, setMyRequest] = useState(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  const [selectedPlan, setSelectedPlan] = useState("");
+  const [selectedPlan, setSelectedPlan] = useState(location.state?.plan || "");
   const [selectedProvider, setSelectedProvider] = useState("");
   const [senderPhone, setSenderPhone] = useState("");
   const [transactionRef, setTransactionRef] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = localStorage.getItem("token");
       try {
         const [configRes, myRequestRes] = await Promise.all([
           api.get("/api/payment/config"),
-          api.get("/api/payment/my-request"),
+          api.get("/api/payment/my-request", {
+            headers: { Authorization: token },
+          }),
         ]);
         setConfig(configRes.data);
         setMyRequest(myRequestRes.data);
@@ -48,14 +53,19 @@ const PasserPremium = () => {
       return;
     }
 
+    const token = localStorage.getItem("token");
     setSubmitting(true);
     try {
-      const { data } = await api.post("/api/payment/request", {
-        plan: selectedPlan,
-        provider: selectedProvider,
-        senderPhone,
-        transactionRef,
-      });
+      const { data } = await api.post(
+        "/api/payment/request",
+        {
+          plan: selectedPlan,
+          provider: selectedProvider,
+          senderPhone,
+          transactionRef,
+        },
+        { headers: { Authorization: token } }
+      );
       toast.success("Demande envoyée, en attente de validation");
       setMyRequest(data.request);
     } catch (error) {

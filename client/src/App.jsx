@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import api from "./configs/api";
 import { login, setLoading } from "./app/features/authSlice";
 import { Toaster } from "react-hot-toast";
+import Pricing from "./pages/Pricing";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ const App = () => {
           <Route index element={<Dashboard />} />
           <Route path="builder/:resumeId" element={<ResumeBuilder />} />
           <Route path="premium" element={<PasserPremium />} />
+          <Route path="pricing" element={<Pricing />} />
         </Route>
 
         <Route path="view/:resumeId" element={<Preview />} />

@@ -153,7 +153,7 @@ const Hero = () => {
               </svg>
             </Link>
             <Link
-              to="/app/premium"
+              to="/app/pricing"
               className="flex items-center gap-2 border border-slate-400 hover:bg-green-50 transition rounded-full px-7 h-12 text-slate-700"
             >
               <svg
