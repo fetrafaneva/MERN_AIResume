@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import ResumeBuilder from "./pages/ResumeBuilder";
 import Preview from "./pages/Preview";
 import Login from "./pages/Login";
+import PasserPremium from "./pages/PasserPremium";
 import { useDispatch } from "react-redux";
 import api from "./configs/api";
 import { login, setLoading } from "./app/features/authSlice";
@@ -47,6 +48,7 @@ const App = () => {
         <Route path="app" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="builder/:resumeId" element={<ResumeBuilder />} />
+          <Route path="premium" element={<PasserPremium />} />
         </Route>
 
         <Route path="view/:resumeId" element={<Preview />} />
