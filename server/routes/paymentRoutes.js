@@ -8,6 +8,7 @@ import {
   getAllRequests,
   approvePaymentRequest,
   rejectPaymentRequest,
+  getPaymentConfig,
 } from "../controllers/paymentController.js";
 
 const paymentRouter = express.Router();
@@ -15,6 +16,7 @@ const paymentRouter = express.Router();
 // Côté utilisateur
 paymentRouter.post("/request", protect, createPaymentRequest);
 paymentRouter.get("/my-request", protect, getMyPaymentRequest);
+paymentRouter.get("/config", getPaymentConfig); // publique, pas de protect
 
 // Côté admin
 paymentRouter.get("/admin/pending", protect, isAdmin, getPendingRequests);
