@@ -12,11 +12,11 @@ const Feature = () => {
     >
       <div className="flex items-center gap-2 text-sm text-green-600 bg-green-400/10 rounded-full px-6 py-1">
         <Zap width={14} />
-        <span>Simple Process</span>
+        <span>Processus simple</span>
       </div>
       <Title
-        title="Build your resume"
-        description="Our streallined process helps you create a professional resume in minutes with intelligent AI-powered tools and features."
+        title="Créez votre CV"
+        description="Notre processus simplifié vous aide à créer un CV professionnel en quelques minutes grâce à des outils intelligents propulsés par l'IA."
       />
 
       <div className="flex flex-col md:flex-row items-center xl:-mt-10 justify-center">
@@ -57,10 +57,11 @@ const Feature = () => {
               </svg>
               <div className="space-y-2">
                 <h3 className="text-base font-semibold text-slate-700">
-                  Real-Time Analytics
+                  Assistant de rédaction IA
                 </h3>
                 <p className="text-sm text-slate-600 max-w-xs">
-                  Get instant insights into your finances with live dashboards.
+                  Rédigez instantanément des résumés et descriptions de poste
+                  percutants grâce à des suggestions intelligentes.
                 </p>
               </div>
             </div>
@@ -84,10 +85,11 @@ const Feature = () => {
               </svg>
               <div className="space-y-2">
                 <h3 className="text-base font-semibold text-slate-700">
-                  Bank-Grade Security
+                  Vos données, pleinement protégées
                 </h3>
                 <p className="text-sm text-slate-600 max-w-xs">
-                  End-to-end encryption, 2FA, compliance with GDPR standards.
+                  Vos informations personnelles restent privées et sécurisées, à
+                  chaque étape.
                 </p>
               </div>
             </div>
@@ -112,11 +114,11 @@ const Feature = () => {
               </svg>
               <div className="space-y-2">
                 <h3 className="text-base font-semibold text-slate-700">
-                  Customizable Reports
+                  PDF prêt à envoyer
                 </h3>
                 <p className="text-sm text-slate-600 max-w-xs">
-                  Export professional, audit-ready financial reports for tax or
-                  internal review.
+                  Téléchargez un CV soigné et professionnel en quelques
+                  secondes, prêt à être envoyé partout.
                 </p>
               </div>
             </div>
