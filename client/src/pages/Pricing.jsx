@@ -41,7 +41,7 @@ const Pricing = () => {
     );
   }
 
-  const { plans = {}, numbers = {} } = config || {};
+  const { plans = {} } = config || {};
   const monthly = plans.monthly;
   const yearly = plans.yearly;
   const pack5 = plans.pack5;
@@ -73,9 +73,9 @@ const Pricing = () => {
         </p>
 
         {/* Toggle Monthly / Yearly */}
-        <div className="relative p-1 bg-white border border-gray-200 rounded-full inline-flex items-center mb-4 w-60">
+        <div className="relative p-1 bg-white border border-gray-200 rounded-full inline-flex items-center mb-10 w-60">
           <div
-            className={`absolute -z-10 w-[calc(50%-4px)] h-[calc(100%-8px)] rounded-full bg-gradient-to-r from-[#FF5804] to-[#FF8D28]/70 transition-transform duration-300 ease-in-out pointer-events-none ${
+            className={`absolute -z-10 w-[calc(50%-4px)] h-[calc(100%-8px)] rounded-full bg-gradient-to-r from-green-500 to-green-400 transition-transform duration-300 ease-in-out pointer-events-none ${
               isYearly ? "translate-x-full" : "translate-x-0"
             }`}
           ></div>
@@ -83,7 +83,7 @@ const Pricing = () => {
           <button
             onClick={() => setIsYearly(false)}
             className={`relative z-10 flex-1 py-2.5 rounded-full text-sm font-medium text-center transition-colors duration-300 cursor-pointer ${
-              !isYearly ? "text-[#FF5804]" : "text-gray-500 hover:text-gray-900"
+              !isYearly ? "text-white" : "text-gray-500 hover:text-gray-900"
             }`}
           >
             Mensuel
@@ -92,7 +92,7 @@ const Pricing = () => {
           <button
             onClick={() => setIsYearly(true)}
             className={`relative z-10 flex-1 py-2.5 rounded-full text-sm font-medium text-center flex items-center justify-center gap-1 transition-colors duration-300 cursor-pointer ${
-              isYearly ? "text-[#FF5804]" : "text-gray-500 hover:text-gray-900"
+              isYearly ? "text-white" : "text-gray-500 hover:text-gray-900"
             }`}
           >
             Annuel <span className="text-xs">-{savingsPercent}%</span>
@@ -100,7 +100,7 @@ const Pricing = () => {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl w-full items-end mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full items-end">
           {/* Free */}
           <div className="rounded-3xl p-6 bg-white border border-neutral-200 hover:shadow-lg transition-shadow">
             <h3 className="text-neutral-700 text-sm mb-6">Gratuit</h3>
@@ -147,8 +147,8 @@ const Pricing = () => {
           </div>
 
           {/* Premium */}
-          <div className="bg-gradient-to-r from-[#FF861C] to-[#FFDBC4] rounded-3xl p-2 shadow-xl hover:shadow-lg transition-shadow">
-            <p className="text-center text-orange-700 text-sm py-1.5">
+          <div className="bg-gradient-to-r from-green-600 to-green-300 rounded-3xl p-2 shadow-xl hover:shadow-lg transition-shadow">
+            <p className="text-center text-green-800 text-sm py-1.5">
               Recommandé
             </p>
             <div className="rounded-3xl p-6 bg-white">
@@ -199,24 +199,64 @@ const Pricing = () => {
               </ul>
               <button
                 onClick={() => goToPayment(isYearly ? "yearly" : "monthly")}
-                className="w-full py-3 rounded-full cursor-pointer bg-gradient-to-r from-[#FF5804] to-[#FF8D28]/70 text-white text-sm hover:opacity-95 transition-opacity"
+                className="w-full py-3 rounded-full cursor-pointer bg-gradient-to-r from-green-500 to-green-600 text-white text-sm hover:opacity-95 transition-opacity"
               >
                 Passer Premium
               </button>
             </div>
           </div>
-        </div>
 
-        {/* Pack ponctuel */}
-        {pack5 && (
-          <button
-            onClick={() => goToPayment("pack5")}
-            className="text-sm text-neutral-500 hover:text-[#FF5804] transition-colors underline underline-offset-2 cursor-pointer"
-          >
-            Besoin de générations ponctuelles plutôt qu'un abonnement ?{" "}
-            {pack5.label} à {formatAr(pack5.amount)}
-          </button>
-        )}
+          {/* Pack ponctuel */}
+          {pack5 && (
+            <div className="rounded-3xl p-6 bg-white border border-neutral-200 hover:shadow-lg transition-shadow">
+              <h3 className="text-neutral-700 text-sm mb-6">{pack5.label}</h3>
+              <div className="flex items-baseline gap-1 mb-8">
+                <span className="text-[28px] text-neutral-900">
+                  {formatAr(pack5.amount)}
+                </span>
+                <span className="text-neutral-600 text-xs">
+                  / {pack5.generations} générations
+                </span>
+              </div>
+              <ul className="space-y-4 mb-8">
+                {[
+                  `${pack5.generations} générations IA`,
+                  "Aucun engagement",
+                  "Valable sans limite de temps",
+                  "Idéal pour un usage ponctuel",
+                  "Support communautaire",
+                ].map((feature) => (
+                  <li
+                    key={feature}
+                    className="flex items-center gap-3 text-sm text-neutral-600"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="17"
+                      height="17"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="m9 12 2 2 4-4"></path>
+                    </svg>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={() => goToPayment("pack5")}
+                className="w-full py-3 rounded-full cursor-pointer border border-neutral-300 text-neutral-700 text-sm hover:bg-neutral-50 transition-colors"
+              >
+                Acheter le pack
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
