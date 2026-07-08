@@ -27,6 +27,7 @@ const Dashboard = () => {
   const [editResumeId, setEditResumeId] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
 
   const navigate = useNavigate();
 
@@ -44,8 +45,9 @@ const Dashboard = () => {
   };
 
   const createResume = async (event) => {
+    event.preventDefault();
+    setIsCreating(true);
     try {
-      event.preventDefault();
       const { data } = await api.post(
         "/api/resumes/create",
         { title },
@@ -57,6 +59,8 @@ const Dashboard = () => {
       navigate(`/app/builder/${data.resume._id}`);
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);
+    } finally {
+      setIsCreating(false);
     }
   };
 
@@ -210,7 +214,7 @@ const Dashboard = () => {
         {showCreateResume && (
           <form
             onSubmit={createResume}
-            onClick={() => setShowCreateResume(false)}
+            onClick={() => !isCreating && setShowCreateResume(false)}
             className="fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 z-10 flex items-center justify-center"
           >
             <div
@@ -225,14 +229,26 @@ const Dashboard = () => {
                 placeholder="Enter resume title"
                 className=" w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600"
                 required
+                disabled={isCreating}
               />
 
-              <button className=" w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
-                Create Resume
+              <button
+                disabled={isCreating}
+                className=" w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                {isCreating && (
+                  <LoaderCircleIcon className=" animate-spin size-4 text-white" />
+                )}
+                {isCreating ? "Creating..." : "Create Resume"}
               </button>
               <XIcon
-                className=" absolute top-4 right-4 text-slate-400 hover:text-slate-600 cursor-pointer transition-colors"
+                className={`absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors ${
+                  isCreating
+                    ? "opacity-50 cursor-not-allowed"
+                    : "cursor-pointer"
+                }`}
                 onClick={() => {
+                  if (isCreating) return;
                   setShowCreateResume(false);
                   setTitle("");
                 }}
