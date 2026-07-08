@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import api from "../configs/api.js"; // ajuste le chemin si besoin
 
@@ -13,13 +13,14 @@ const PROVIDER_LABELS = {
 const PasserPremium = () => {
   const { user } = useSelector((state) => state.auth);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [config, setConfig] = useState(null);
   const [myRequest, setMyRequest] = useState(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  const [selectedPlan, setSelectedPlan] = useState(location.state?.plan || "");
+  const selectedPlan = location.state?.plan || "";
   const [selectedProvider, setSelectedProvider] = useState("");
   const [senderPhone, setSenderPhone] = useState("");
   const [transactionRef, setTransactionRef] = useState("");
@@ -116,6 +117,28 @@ const PasserPremium = () => {
 
   const numbers = config?.numbers || {};
   const plans = config?.plans || {};
+  const planData = plans[selectedPlan];
+
+  // Aucun plan reçu depuis /pricing → on renvoie l'utilisateur choisir une offre
+  if (!planData) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 text-center">
+        <h1 className="text-2xl font-semibold text-slate-800 mb-2">
+          Aucune offre sélectionnée
+        </h1>
+        <p className="text-slate-600 max-w-md mb-6">
+          Merci de choisir une offre depuis la page des tarifs avant de
+          continuer.
+        </p>
+        <button
+          onClick={() => navigate("/pricing")}
+          className="px-8 py-3 bg-green-500 hover:bg-green-600 active:scale-95 transition-all rounded-full text-white"
+        >
+          Voir les offres
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen px-4 py-12 flex flex-col items-center">
@@ -123,8 +146,7 @@ const PasserPremium = () => {
         Passer <span className="text-green-600">Premium</span>
       </h1>
       <p className="text-slate-600 text-center max-w-md mb-8">
-        Choisissez votre offre, effectuez le transfert, puis soumettez votre
-        demande ci-dessous.
+        Effectuez le transfert, puis soumettez votre demande ci-dessous.
       </p>
 
       {/* Rejeté précédemment */}
@@ -140,34 +162,24 @@ const PasserPremium = () => {
         onSubmit={handleSubmit}
         className="w-full max-w-md flex flex-col gap-5 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
       >
-        {/* Choix du plan */}
+        {/* Récap de l'offre choisie */}
         <div>
           <label className="text-sm font-medium text-slate-700 mb-2 block">
-            Choisissez votre offre
+            Votre offre
           </label>
-          <div className="flex flex-col gap-2">
-            {Object.entries(plans).map(([key, planData]) => (
-              <button
-                type="button"
-                key={key}
-                onClick={() => setSelectedPlan(key)}
-                className={`text-left px-4 py-3 rounded-lg border transition ${
-                  selectedPlan === key
-                    ? "border-green-500 bg-green-50"
-                    : "border-slate-200 hover:border-green-300"
-                }`}
-              >
-                <div className="flex justify-between items-center">
-                  <span className="font-medium text-slate-800">
-                    {planData.label}
-                  </span>
-                  <span className="text-green-600 font-semibold">
-                    {planData.amount.toLocaleString("fr-FR")} Ar
-                  </span>
-                </div>
-              </button>
-            ))}
+          <div className="flex justify-between items-center px-4 py-3 rounded-lg border border-green-500 bg-green-50">
+            <span className="font-medium text-slate-800">{planData.label}</span>
+            <span className="text-green-600 font-semibold">
+              {planData.amount.toLocaleString("fr-FR")} Ar
+            </span>
           </div>
+          <button
+            type="button"
+            onClick={() => navigate("/pricing")}
+            className="text-xs text-slate-500 hover:text-green-600 underline underline-offset-2 mt-2"
+          >
+            Changer d'offre
+          </button>
         </div>
 
         {/* Choix du provider */}

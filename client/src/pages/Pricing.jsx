@@ -83,7 +83,9 @@ const Pricing = () => {
           <button
             onClick={() => setIsYearly(false)}
             className={`relative z-10 flex-1 py-2.5 rounded-full text-sm font-medium text-center transition-colors duration-300 cursor-pointer ${
-              !isYearly ? "text-white" : "text-gray-500 hover:text-gray-900"
+              !isYearly
+                ? " text-green-500"
+                : "text-gray-500 hover:text-gray-900"
             }`}
           >
             Mensuel
@@ -92,7 +94,7 @@ const Pricing = () => {
           <button
             onClick={() => setIsYearly(true)}
             className={`relative z-10 flex-1 py-2.5 rounded-full text-sm font-medium text-center flex items-center justify-center gap-1 transition-colors duration-300 cursor-pointer ${
-              isYearly ? "text-white" : "text-gray-500 hover:text-gray-900"
+              isYearly ? "text-green-500" : "text-gray-500 hover:text-gray-900"
             }`}
           >
             Annuel <span className="text-xs">-{savingsPercent}%</span>
