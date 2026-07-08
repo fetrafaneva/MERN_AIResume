@@ -2,7 +2,7 @@ export const FREE_PLAN_LIMIT = 3; // générations gratuites par mois
 
 export const PREMIUM_PLANS = {
   pack5: { label: "Pack 5 générations", amount: 3000, generations: 5 },
-  monthly: { label: "Abonnement mensuel", amount: 8000, durationDays: 30 },
+  monthly: { label: "Abonnement mensuel", amount: 10000, durationDays: 30 },
   yearly: { label: "Abonnement annuel", amount: 80000, durationDays: 365 },
 };
 
