@@ -10,7 +10,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isOnPricingPage = location.pathname === "/app/pricing";
+  const hidePremiumButton =
+    location.pathname === "/app/pricing" ||
+    location.pathname === "/app/premium";
 
   const logoutUser = () => {
     navigate("/");
@@ -40,7 +42,7 @@ const Navbar = () => {
               Premium
             </span>
           ) : (
-            !isOnPricingPage && (
+            !hidePremiumButton && (
               <Link
                 to="/app/pricing"
                 className="flex items-center gap-1 bg-green-500 hover:bg-green-600 text-white px-5 py-1.5 rounded-full active:scale-95 transition-all"
