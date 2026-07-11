@@ -28,10 +28,12 @@ const Dashboard = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
+  const [isLoadingResumes, setIsLoadingResumes] = useState(true);
 
   const navigate = useNavigate();
 
   const loadAllResumes = async () => {
+    setIsLoadingResumes(true);
     try {
       const { data } = await api.get(
         "/api/users/resumes",
@@ -41,6 +43,8 @@ const Dashboard = () => {
       setAllResumes(data.resumes);
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);
+    } finally {
+      setIsLoadingResumes(false);
     }
   };
 
@@ -160,56 +164,70 @@ const Dashboard = () => {
         <hr className=" border-slate-300 my-6 sm:w-[305px]" />
 
         <div className="grid grid-cols-2 sm:flex flex-wrap gap-4">
-          {allResumes.map((resume, index) => {
-            const baseColor = colors[index % colors.length];
-            return (
-              <button
-                onClick={() => navigate(`/app/builder/${resume._id}`)}
-                key={index}
-                className=" relative w-full sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 border group hover:shadow-lg transition-all duration-300 cursor-pointer"
-                style={{
-                  background: `linear-gradient(135deg, ${baseColor}10, ${baseColor}40)`,
-                  borderColor: baseColor + "40",
-                }}
-              >
-                <FilePenLineIcon
-                  className=" size-7 group-hover:scale-105 transition-all"
-                  style={{ color: baseColor }}
-                />
-                <p
-                  className=" text-sm group-hover:scale-105 transition-all px-2 text-center"
-                  style={{ color: baseColor }}
-                >
-                  {resume.title}
-                </p>
-
-                <p
-                  className=" absolute bottom-1 text-[11px] text-slate-400 group-hover:text-slate-500 transition-all duration-300 px-2 text-center"
-                  style={{ color: baseColor + "90" }}
-                >
-                  Updated on {new Date(resume.updatedAt).toLocaleDateString()}
-                </p>
-
+          {isLoadingResumes
+            ? Array.from({ length: 4 }).map((_, index) => (
                 <div
-                  onClick={(e) => e.stopPropagation()}
-                  className=" absolute top-1 right-1 group-hover:flex items-center hidden"
-                >
-                  <TrashIcon
-                    onClick={() => deleteResume(resume._id)}
-                    className=" size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors"
-                  />
-                  <PencilIcon
-                    onClick={() => {
-                      setEditResumeId(resume._id);
-                      setTitle(resume.title);
+                  key={index}
+                  className="w-full sm:max-w-36 h-48 rounded-lg bg-slate-200/70 animate-pulse"
+                />
+              ))
+            : allResumes.map((resume, index) => {
+                const baseColor = colors[index % colors.length];
+                return (
+                  <button
+                    onClick={() => navigate(`/app/builder/${resume._id}`)}
+                    key={index}
+                    className=" relative w-full sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 border group hover:shadow-lg transition-all duration-300 cursor-pointer"
+                    style={{
+                      background: `linear-gradient(135deg, ${baseColor}10, ${baseColor}40)`,
+                      borderColor: baseColor + "40",
                     }}
-                    className=" size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors"
-                  />
-                </div>
-              </button>
-            );
-          })}
+                  >
+                    <FilePenLineIcon
+                      className=" size-7 group-hover:scale-105 transition-all"
+                      style={{ color: baseColor }}
+                    />
+                    <p
+                      className=" text-sm group-hover:scale-105 transition-all px-2 text-center"
+                      style={{ color: baseColor }}
+                    >
+                      {resume.title}
+                    </p>
+
+                    <p
+                      className=" absolute bottom-1 text-[11px] text-slate-400 group-hover:text-slate-500 transition-all duration-300 px-2 text-center"
+                      style={{ color: baseColor + "90" }}
+                    >
+                      Updated on{" "}
+                      {new Date(resume.updatedAt).toLocaleDateString()}
+                    </p>
+
+                    <div
+                      onClick={(e) => e.stopPropagation()}
+                      className=" absolute top-1 right-1 group-hover:flex items-center hidden"
+                    >
+                      <TrashIcon
+                        onClick={() => deleteResume(resume._id)}
+                        className=" size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors"
+                      />
+                      <PencilIcon
+                        onClick={() => {
+                          setEditResumeId(resume._id);
+                          setTitle(resume.title);
+                        }}
+                        className=" size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors"
+                      />
+                    </div>
+                  </button>
+                );
+              })}
         </div>
+
+        {!isLoadingResumes && allResumes.length === 0 && (
+          <p className="text-sm text-slate-400 mt-2">
+            Vous n'avez pas encore de CV. Créez-en un pour commencer !
+          </p>
+        )}
 
         {showCreateResume && (
           <form

@@ -10,7 +10,7 @@ const Testimonial = () => {
       name: "Briar Martin",
       handle: "@neilstellar",
       comment:
-        "This platform completely changed the way I work. Super intuitive!",
+        "Cette plateforme a complètement transformé ma façon de travailler. Simple, rapide et incroyablement intuitive.",
     },
     {
       image:
@@ -18,21 +18,23 @@ const Testimonial = () => {
       name: "Avery Johnson",
       handle: "@averywrites",
       comment:
-        "Amazing experience! The UI is clean and the performance is great.",
+        "Une expérience exceptionnelle ! L'interface est élégante et les performances sont excellentes.",
     },
     {
       image:
         "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=200&auto=format&fit=crop&q=60",
       name: "Jordan Lee",
       handle: "@jordantalks",
-      comment: "Customer support was fast and helpful. Highly recommended.",
+      comment:
+        "Le support client est réactif et efficace. Je recommande cette plateforme sans hésiter.",
     },
     {
       image:
         "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=60",
       name: "Sam Carter",
       handle: "@samcodes",
-      comment: "A solid product with great attention to detail. Loved it!",
+      comment:
+        "Un produit de grande qualité, pensé dans les moindres détails. Je suis entièrement satisfait.",
     },
   ];
 
