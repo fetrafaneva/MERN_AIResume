@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { dummyResumeData } from "../assets/assets";
 import {
   ArrowLeftIcon,
@@ -12,6 +12,7 @@ import {
   FileText,
   FolderIcon,
   GraduationCap,
+  LockIcon,
   Share2Icon,
   Sparkle,
   User,
@@ -32,7 +33,10 @@ import toast from "react-hot-toast";
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
-  const { token } = useSelector((state) => state.auth);
+  const { token, user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  const isPremium = user?.plan === "premium";
 
   const [resumeData, setResumeData] = useState({
     _id: "",
@@ -111,6 +115,11 @@ const ResumeBuilder = () => {
   };
 
   const downloadResume = () => {
+    if (!isPremium) {
+      toast.error("Passez Premium pour télécharger votre CV en PDF");
+      navigate("/app/pricing");
+      return;
+    }
     window.print();
   };
 
@@ -333,9 +342,21 @@ const ResumeBuilder = () => {
                 </button>
                 <button
                   onClick={downloadResume}
-                  className="flex items-center gap-2 px-6 py-2 text-xs bg-gradient-to-br from-green-100 to-green-200 text-green-600 rounded-lg ring-green-300 hover:ring transition-colors"
+                  title={
+                    !isPremium ? "Passez Premium pour télécharger votre CV" : ""
+                  }
+                  className={`flex items-center gap-2 px-6 py-2 text-xs rounded-lg transition-colors ${
+                    isPremium
+                      ? "bg-gradient-to-br from-green-100 to-green-200 text-green-600 ring-green-300 hover:ring"
+                      : "bg-gradient-to-br from-amber-50 to-amber-100 text-amber-700 ring-amber-200 hover:ring"
+                  }`}
                 >
-                  <DownloadIcon className="size-4" /> Download
+                  {isPremium ? (
+                    <DownloadIcon className="size-4" />
+                  ) : (
+                    <LockIcon className="size-4" />
+                  )}
+                  Download
                 </button>
               </div>
             </div>

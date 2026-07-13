@@ -15,7 +15,7 @@ const Preview = () => {
 
   const loadResume = async () => {
     try {
-      const { data } = await api.get("/api/resumes/public/", +resumeId);
+      const { data } = await api.get("/api/resumes/public/" + resumeId);
       setResumeData(data.resume);
     } catch (error) {
       console.log(error.message);
@@ -26,7 +26,8 @@ const Preview = () => {
 
   useEffect(() => {
     loadResume();
-  });
+  }, []);
+
   return resumeData ? (
     <div className="bg-slate-100">
       <div className="max-w-3xl mx-auto py-10">
