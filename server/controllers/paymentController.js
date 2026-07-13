@@ -113,15 +113,21 @@ export const approvePaymentRequest = async (req, res) => {
     const user = await User.findById(request.user);
     const planConfig = PREMIUM_PLANS[request.plan];
 
-    user.plan = "premium";
-    if (planConfig.durationDays) {
-      user.premiumExpiresAt = new Date(
-        Date.now() + planConfig.durationDays * 24 * 60 * 60 * 1000
-      );
+    if (request.plan === "pack5") {
+      // Pack ponctuel : on ajoute des crédits, pas de statut premium
+      user.extraCredits = (user.extraCredits || 0) + planConfig.generations;
+    } else {
+      // Abonnements : statut premium avec expiration
+      user.plan = "premium";
+      if (planConfig.durationDays) {
+        user.premiumExpiresAt = new Date(
+          Date.now() + planConfig.durationDays * 24 * 60 * 60 * 1000
+        );
+      }
     }
     await user.save();
 
-    res.json({ message: "Compte basculé en Premium ✅", request });
+    res.json({ message: "Compte mis à jour ✅", request });
   } catch (error) {
     res.status(500).json({ message: "Erreur serveur", error: error.message });
   }

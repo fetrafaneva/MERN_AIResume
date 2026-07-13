@@ -22,6 +22,10 @@ const UserShema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    extraCredits: {
+      type: Number,
+      default: 0,
+    },
 
     // --- Suivi des générations gratuites ---
     generationsUsed: {

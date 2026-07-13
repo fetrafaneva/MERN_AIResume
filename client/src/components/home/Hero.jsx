@@ -29,12 +29,7 @@ const Hero = () => {
             >
               Features
             </a>
-            <a
-              href="#testimonials"
-              className="text-sm font-medium hover:text-green-600 transition"
-            >
-              Testimonials
-            </a>
+
             <a
               href="#cta"
               className="text-sm font-medium hover:text-green-600 transition"
@@ -97,9 +92,7 @@ const Hero = () => {
           <a href="#features" className="text-white">
             Features
           </a>
-          <a href="#testimonials" className="text-white">
-            Testimonials
-          </a>
+
           <a href="#contact" className="text-white">
             Contact
           </a>
