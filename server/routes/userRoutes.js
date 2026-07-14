@@ -4,6 +4,7 @@ import {
   getUserResumes,
   loginUser,
   registerUser,
+  consumeDownload,
 } from "../controllers/userController.js";
 import protect from "../middlwares/authMiddleware.js";
 
@@ -13,5 +14,6 @@ userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
 userRouter.get("/data", protect, getUserById);
 userRouter.get("/resumes", protect, getUserResumes);
+userRouter.post("/consume-download", protect, consumeDownload);
 
 export default userRouter;
