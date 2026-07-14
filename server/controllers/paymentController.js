@@ -1,6 +1,10 @@
 import PaymentRequest from "../models/PaymentRequest.js";
 import User from "../models/User.js";
-import { PREMIUM_PLANS, PAYMENT_NUMBERS } from "../configs/plans.js";
+import {
+  PREMIUM_PLANS,
+  PAYMENT_NUMBERS,
+  FREE_DOWNLOAD_LIMIT,
+} from "../configs/plans.js";
 
 // ============================
 // CÔTÉ UTILISATEUR
@@ -8,7 +12,11 @@ import { PREMIUM_PLANS, PAYMENT_NUMBERS } from "../configs/plans.js";
 
 export const getPaymentConfig = async (req, res) => {
   try {
-    res.json({ plans: PREMIUM_PLANS, numbers: PAYMENT_NUMBERS });
+    res.json({
+      plans: PREMIUM_PLANS,
+      numbers: PAYMENT_NUMBERS,
+      downloadLimit: FREE_DOWNLOAD_LIMIT,
+    });
   } catch (error) {
     res.status(500).json({ message: "Erreur serveur", error: error.message });
   }

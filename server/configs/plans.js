@@ -1,4 +1,5 @@
 export const FREE_PLAN_LIMIT = 3; // générations gratuites par mois
+export const FREE_DOWNLOAD_LIMIT = 3; // téléchargements PDF gratuits (à vie)
 
 export const PREMIUM_PLANS = {
   pack5: { label: "Pack 5 générations", amount: 3000, generations: 5 },

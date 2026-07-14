@@ -26,6 +26,10 @@ const UserShema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    downloadsUsed: {
+      type: Number,
+      default: 0,
+    },
 
     // --- Suivi des générations gratuites ---
     generationsUsed: {
