@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Resume from "../models/Resume.js";
+import { FREE_DOWNLOAD_LIMIT } from "../configs/plans.js";
 
 const generateToken = (userId) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
@@ -104,5 +105,37 @@ export const getUserResumes = async (req, res) => {
     return res.status(200).json({ resumes });
   } catch (error) {
     return res.status(400).json({ message: error.message });
+  }
+};
+
+export const consumeDownload = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    // Premium actif → téléchargements illimités, rien à compter
+    if (user.isPremiumActive()) {
+      return res.json({ allowed: true, remaining: null });
+    }
+
+    if (user.downloadsUsed >= FREE_DOWNLOAD_LIMIT) {
+      return res.status(403).json({
+        message: `Vous avez atteint votre limite de ${FREE_DOWNLOAD_LIMIT} téléchargements gratuits. Passez Premium pour continuer.`,
+        limitReached: true,
+      });
+    }
+
+    user.downloadsUsed += 1;
+    await user.save();
+
+    res.json({
+      allowed: true,
+      remaining: FREE_DOWNLOAD_LIMIT - user.downloadsUsed,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur serveur" });
   }
 };

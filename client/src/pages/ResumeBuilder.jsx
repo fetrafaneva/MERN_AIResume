@@ -12,10 +12,12 @@ import {
   FileText,
   FolderIcon,
   GraduationCap,
+  LoaderCircleIcon,
   LockIcon,
   Share2Icon,
   Sparkle,
   User,
+  XIcon,
 } from "lucide-react";
 import { useEffect } from "react";
 import PersonalInfoForm from "../components/PersonalInfoForm";
@@ -37,6 +39,15 @@ const ResumeBuilder = () => {
   const navigate = useNavigate();
 
   const isPremium = user?.plan === "premium";
+
+  const [downloadLimit, setDownloadLimit] = useState(3);
+  const [localDownloadsUsed, setLocalDownloadsUsed] = useState(
+    user?.downloadsUsed || 0
+  );
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
+  const [isConsuming, setIsConsuming] = useState(false);
+
+  const remainingDownloads = downloadLimit - localDownloadsUsed;
 
   const [resumeData, setResumeData] = useState({
     _id: "",
@@ -66,6 +77,15 @@ const ResumeBuilder = () => {
     }
   };
 
+  const loadDownloadLimit = async () => {
+    try {
+      const { data } = await api.get("/api/payment/config");
+      if (data.downloadLimit) setDownloadLimit(data.downloadLimit);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const [removeBackground, setRemoveBackground] = useState(false);
 
@@ -82,6 +102,7 @@ const ResumeBuilder = () => {
 
   useEffect(() => {
     loadExistingResume();
+    if (!isPremium) loadDownloadLimit();
   }, []);
 
   const changeResumeVisibility = async () => {
@@ -115,12 +136,35 @@ const ResumeBuilder = () => {
   };
 
   const downloadResume = () => {
-    if (!isPremium) {
-      toast.error("Passez Premium pour télécharger votre CV en PDF");
-      navigate("/app/pricing");
+    if (isPremium) {
+      window.print();
       return;
     }
-    window.print();
+    setShowDownloadModal(true);
+  };
+
+  const confirmDownload = async () => {
+    setIsConsuming(true);
+    try {
+      const { data } = await api.post(
+        "/api/users/consume-download",
+        {},
+        { headers: { Authorization: token } }
+      );
+      setLocalDownloadsUsed((prev) => prev + 1);
+      setShowDownloadModal(false);
+      window.print();
+    } catch (error) {
+      if (error?.response?.data?.limitReached) {
+        toast.error(error.response.data.message);
+        setShowDownloadModal(false);
+        navigate("/app/pricing");
+      } else {
+        toast.error(error?.response?.data?.message || error.message);
+      }
+    } finally {
+      setIsConsuming(false);
+    }
   };
 
   const saveResume = async () => {
@@ -342,9 +386,6 @@ const ResumeBuilder = () => {
                 </button>
                 <button
                   onClick={downloadResume}
-                  title={
-                    !isPremium ? "Passez Premium pour télécharger votre CV" : ""
-                  }
                   className={`flex items-center gap-2 px-6 py-2 text-xs rounded-lg transition-colors ${
                     isPremium
                       ? "bg-gradient-to-br from-green-100 to-green-200 text-green-600 ring-green-300 hover:ring"
@@ -370,6 +411,91 @@ const ResumeBuilder = () => {
           </div>
         </div>
       </div>
+
+      {/* Pop-up de confirmation / limite de téléchargements */}
+      {showDownloadModal && (
+        <div
+          onClick={() => !isConsuming && setShowDownloadModal(false)}
+          className="fixed inset-0 bg-black/70 backdrop-blur z-50 flex items-center justify-center px-4"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center"
+          >
+            {remainingDownloads > 0 ? (
+              <>
+                <div className="mx-auto mb-4 size-12 rounded-full bg-green-50 flex items-center justify-center">
+                  <DownloadIcon className="size-6 text-green-600" />
+                </div>
+                <h2 className="text-lg font-semibold text-slate-800 mb-2">
+                  Téléchargement gratuit
+                </h2>
+                <p className="text-sm text-slate-600 mb-6">
+                  Il vous reste{" "}
+                  <span className="font-semibold text-green-600">
+                    {remainingDownloads}
+                  </span>{" "}
+                  téléchargement{remainingDownloads > 1 ? "s" : ""} gratuit
+                  {remainingDownloads > 1 ? "s" : ""} sur {downloadLimit}.
+                </p>
+                <div className="flex gap-3">
+                  <button
+                    disabled={isConsuming}
+                    onClick={() => setShowDownloadModal(false)}
+                    className="flex-1 py-2.5 rounded-full border border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors disabled:opacity-50"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    disabled={isConsuming}
+                    onClick={confirmDownload}
+                    className="flex-1 py-2.5 rounded-full bg-green-500 hover:bg-green-600 text-white transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                  >
+                    {isConsuming && (
+                      <LoaderCircleIcon className="size-4 animate-spin" />
+                    )}
+                    {isConsuming ? "..." : "Télécharger"}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="mx-auto mb-4 size-12 rounded-full bg-amber-50 flex items-center justify-center">
+                  <LockIcon className="size-6 text-amber-600" />
+                </div>
+                <h2 className="text-lg font-semibold text-slate-800 mb-2">
+                  Limite atteinte
+                </h2>
+                <p className="text-sm text-slate-600 mb-6">
+                  Vous avez utilisé vos {downloadLimit} téléchargements
+                  gratuits. Passez Premium pour continuer à télécharger vos CV.
+                </p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setShowDownloadModal(false)}
+                    className="flex-1 py-2.5 rounded-full border border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors"
+                  >
+                    Plus tard
+                  </button>
+                  <button
+                    onClick={() => navigate("/app/pricing")}
+                    className="flex-1 py-2.5 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white transition-colors"
+                  >
+                    Passer Premium
+                  </button>
+                </div>
+              </>
+            )}
+
+            <XIcon
+              className={`absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors ${
+                isConsuming ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+              }`}
+              onClick={() => !isConsuming && setShowDownloadModal(false)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
