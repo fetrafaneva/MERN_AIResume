@@ -2,7 +2,7 @@
 
 This project is a full-stack web app that allows users to create, customize, and generate professional resumes using AI assistance, all in a clean and interactive interface. It uses MongoDB, Express, React, and Node.js.
 
-## 📦 Tech Stack
+## Tech Stack
 
 ### Frontend:
 
@@ -27,7 +27,7 @@ This project is a full-stack web app that allows users to create, customize, and
 - `ImageKit (image upload & optimization)`
 
 
-## 🦄 Features
+## Features
 
 Here's what you can do with MERN AI Resume:
 
@@ -45,7 +45,7 @@ Here's what you can do with MERN AI Resume:
 
 - **Save & Manage Resumes**: Store your resumes in the database and access them anytime.
 
-## 👩🏽‍🍳 The Process
+## The Process
 
 I started by rendering a canvas with rough.js to create the base for all the drawings. Then, I focused on drawing on the canvas, allowing users to make lines, rectangles, and other shapes.
 
@@ -61,7 +61,7 @@ Along the way, while building everything, I took notes on what I've learned so I
 
 This way, I understood what I've built. The funny thing is, as soon as I started to document what happened behind the scenes and the features I've added, it made me realize that we fully understand something once we've actually taken a step back, thought about it, and documented what we've done. I think this is a good practice to follow when learning something new.
 
-## 📚 What I Learned
+## What I Learned
 
 During this project, I gained valuable technical skills and a deeper understanding of full-stack development concepts, which significantly improved my problem-solving and logical thinking abilities.
 
@@ -140,6 +140,14 @@ Create .env file with your keys:
         
         OPENAI_MODEL = "Your_Openai_Model"
 
-## 🍿 Video
+## Deployment
 
-https://github.com/
+The application is deployed using modern cloud platforms to ensure reliability and accessibility.
+
+### Frontend Deployment
+- **Vercel** – Hosts the React frontend with automatic deployments from GitHub.
+
+### Backend Deployment
+- **Render** – Hosts the Node.js/Express API and manages server-side operations.
+
+### Live Application  NyResumeAko[https://nyresumeako.vercel.app/]
