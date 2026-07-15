@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useNavigate as _unused } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import api from "../configs/api";

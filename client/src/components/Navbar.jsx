@@ -63,6 +63,15 @@ const Navbar = () => {
             )
           )}
 
+          {user?.role === "admin" && (
+            <Link
+              to="/app/admin/payments"
+              className="text-xs text-slate-500 hover:text-slate-700 underline underline-offset-2"
+            >
+              Admin
+            </Link>
+          )}
+
           <button
             onClick={logoutUser}
             className="bg-white hover:bg-slate-50 border border-gray-300 px-4 sm:px-7 py-1.5 rounded-full active:scale-95 transition-all"

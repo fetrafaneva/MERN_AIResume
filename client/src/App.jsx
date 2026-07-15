@@ -12,6 +12,7 @@ import api from "./configs/api";
 import { login, setLoading } from "./app/features/authSlice";
 import { Toaster } from "react-hot-toast";
 import Pricing from "./pages/Pricing";
+import AdminPayments from "./pages/AdminPayments";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ const App = () => {
           <Route path="builder/:resumeId" element={<ResumeBuilder />} />
           <Route path="premium" element={<PasserPremium />} />
           <Route path="pricing" element={<Pricing />} />
+          <Route path="admin/payments" element={<AdminPayments />} />
         </Route>
 
         <Route path="view/:resumeId" element={<Preview />} />
