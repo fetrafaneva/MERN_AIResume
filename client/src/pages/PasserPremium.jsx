@@ -7,7 +7,6 @@ import api from "../configs/api.js"; // ajuste le chemin si besoin
 const PROVIDER_LABELS = {
   mvola: "MVola",
   orange: "Orange Money",
-  airtel: "Airtel Money",
 };
 
 const PasserPremium = () => {
@@ -175,7 +174,7 @@ const PasserPremium = () => {
           </div>
           <button
             type="button"
-            onClick={() => navigate("/pricing")}
+            onClick={() => navigate("/app/pricing")}
             className="text-xs text-slate-500 hover:text-green-600 underline underline-offset-2 mt-2"
           >
             Changer d'offre
@@ -235,13 +234,13 @@ const PasserPremium = () => {
         {/* Référence transaction (optionnel) */}
         <div>
           <label className="text-sm font-medium text-slate-700 mb-1 block">
-            Référence de transaction (optionnel)
+            Nom associé au numéro Mobile Money
           </label>
           <input
             type="text"
             value={transactionRef}
             onChange={(e) => setTransactionRef(e.target.value)}
-            placeholder="Ex: MP240707.1234.A56789"
+            placeholder="Ex: fetra faneva"
             className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
           />
         </div>
