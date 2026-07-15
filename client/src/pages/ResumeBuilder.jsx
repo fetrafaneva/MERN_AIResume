@@ -436,7 +436,7 @@ const ResumeBuilder = () => {
                     {remainingDownloads}
                   </span>{" "}
                   téléchargement{remainingDownloads > 1 ? "s" : ""} gratuit
-                  {remainingDownloads > 1 ? "s" : ""} sur {downloadLimit}.
+                  {remainingDownloads > 1 ? "s" : ""}.
                 </p>
                 <div className="flex gap-3">
                   <button
