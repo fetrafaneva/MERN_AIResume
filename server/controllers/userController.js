@@ -150,3 +150,17 @@ export const consumeDownload = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur" });
   }
 };
+
+export const dismissActivationNotice = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.userId,
+      { activationNotice: null },
+      { new: true }
+    );
+    user.password = undefined;
+    return res.status(200).json({ user });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};

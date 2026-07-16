@@ -10,13 +10,16 @@ import {
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../configs/api";
 import toast from "react-hot-toast";
 import pdfToText from "react-pdftotext";
+import { login } from "../app/features/authSlice";
+import ActivationNoticeModal from "../components/ActivationNoticeModal";
 
 const Dashboard = () => {
   const { user, token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"];
   const [allResumes, setAllResumes] = useState([]);
@@ -29,6 +32,10 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [isLoadingResumes, setIsLoadingResumes] = useState(true);
+
+  const [activationNotice, setActivationNotice] = useState(
+    user?.activationNotice || null
+  );
 
   const navigate = useNavigate();
 
@@ -128,12 +135,41 @@ const Dashboard = () => {
     }
   };
 
+  const dismissNotice = async () => {
+    try {
+      const { data } = await api.post(
+        "/api/users/dismiss-activation-notice",
+        {},
+        { headers: { Authorization: token } }
+      );
+      dispatch(login({ token, user: data.user }));
+      setActivationNotice(null);
+    } catch (error) {
+      setActivationNotice(null); // on ferme quand même côté visuel
+    }
+  };
+
   useEffect(() => {
     loadAllResumes();
   }, []);
 
   return (
-    <div>
+    <div className="relative min-h-screen overflow-hidden bg-slate-50">
+      {/* Background décoratif */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#f8fafc,#f1f5f9)]"></div>
+        <div className="absolute top-[-10%] right-[-5%] size-96 rounded-full bg-amber-200/30 blur-[100px]"></div>
+        <div className="absolute bottom-[-10%] left-[-5%] size-96 rounded-full bg-yellow-100/40 blur-[100px]"></div>
+        <div
+          className="absolute inset-0 opacity-[0.4]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, #cbd5e1 1px, transparent 1px)",
+            backgroundSize: "24px 24px",
+          }}
+        ></div>
+      </div>
+
       <div className=" max-w-7xl mx-auto px-4 py-8">
         <p className=" text-2xl font-medium mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text text-transparent sm:hidden">
           Welcome, Claire
@@ -375,6 +411,11 @@ const Dashboard = () => {
             </div>
           </form>
         )}
+
+        <ActivationNoticeModal
+          notice={activationNotice}
+          onClose={dismissNotice}
+        />
       </div>
     </div>
   );
