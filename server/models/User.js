@@ -30,6 +30,10 @@ const UserShema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    activationNotice: {
+      type: mongoose.Schema.Types.Mixed,
+      default: null,
+    },
     downloadsUsed: {
       type: Number,
       default: 0,

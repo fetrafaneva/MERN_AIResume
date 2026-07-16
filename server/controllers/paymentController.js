@@ -122,21 +122,39 @@ export const approvePaymentRequest = async (req, res) => {
     const planConfig = PREMIUM_PLANS[request.plan];
 
     if (request.plan === "pack5") {
-      // Pack ponctuel : crédits de génération ET de téléchargement, pas de statut premium
       user.extraCredits = (user.extraCredits || 0) + planConfig.generations;
       user.extraDownloads = (user.extraDownloads || 0) + planConfig.downloads;
+
+      user.activationNotice = {
+        type: "pack",
+        planKey: request.plan,
+        label: planConfig.label,
+        amount: planConfig.amount,
+        generations: planConfig.generations,
+        downloads: planConfig.downloads,
+      };
     } else {
-      // Abonnements : statut premium avec expiration
       user.plan = "premium";
+      let expiresAt = null;
       if (planConfig.durationDays) {
-        user.premiumExpiresAt = new Date(
+        expiresAt = new Date(
           Date.now() + planConfig.durationDays * 24 * 60 * 60 * 1000
         );
+        user.premiumExpiresAt = expiresAt;
       }
+
+      user.activationNotice = {
+        type: "subscription",
+        planKey: request.plan,
+        label: planConfig.label,
+        amount: planConfig.amount,
+        expiresAt,
+      };
     }
+
     await user.save();
 
-    res.json({ message: "Compte mis à jour ✅", request });
+    res.json({ message: "Compte mis à jour", request });
   } catch (error) {
     res.status(500).json({ message: "Erreur serveur", error: error.message });
   }
