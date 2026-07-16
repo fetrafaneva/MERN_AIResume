@@ -122,8 +122,9 @@ export const approvePaymentRequest = async (req, res) => {
     const planConfig = PREMIUM_PLANS[request.plan];
 
     if (request.plan === "pack5") {
-      // Pack ponctuel : on ajoute des crédits, pas de statut premium
+      // Pack ponctuel : crédits de génération ET de téléchargement, pas de statut premium
       user.extraCredits = (user.extraCredits || 0) + planConfig.generations;
+      user.extraDownloads = (user.extraDownloads || 0) + planConfig.downloads;
     } else {
       // Abonnements : statut premium avec expiration
       user.plan = "premium";
