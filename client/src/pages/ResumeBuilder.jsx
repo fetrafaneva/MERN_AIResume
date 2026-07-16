@@ -44,10 +44,15 @@ const ResumeBuilder = () => {
   const [localDownloadsUsed, setLocalDownloadsUsed] = useState(
     user?.downloadsUsed || 0
   );
+  const [localExtraDownloads, setLocalExtraDownloads] = useState(
+    user?.extraDownloads || 0
+  );
   const [showDownloadModal, setShowDownloadModal] = useState(false);
   const [isConsuming, setIsConsuming] = useState(false);
 
-  const remainingDownloads = downloadLimit - localDownloadsUsed;
+  // Crédits gratuits restants + crédits pack (achat ponctuel)
+  const remainingFree = Math.max(0, downloadLimit - localDownloadsUsed);
+  const remainingDownloads = remainingFree + localExtraDownloads;
 
   const [resumeData, setResumeData] = useState({
     _id: "",
@@ -151,7 +156,12 @@ const ResumeBuilder = () => {
         {},
         { headers: { Authorization: token } }
       );
-      setLocalDownloadsUsed((prev) => prev + 1);
+      // Le backend consomme en priorité les crédits pack, sinon le quota gratuit
+      if (data.source === "pack") {
+        setLocalExtraDownloads((prev) => Math.max(0, prev - 1));
+      } else {
+        setLocalDownloadsUsed((prev) => prev + 1);
+      }
       setShowDownloadModal(false);
       window.print();
     } catch (error) {
