@@ -22,6 +22,10 @@ const UserShema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    extraDownloads: {
+      type: Number,
+      default: 0,
+    },
     extraCredits: {
       type: Number,
       default: 0,

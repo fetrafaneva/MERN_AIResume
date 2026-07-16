@@ -116,9 +116,20 @@ export const consumeDownload = async (req, res) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    // Premium actif → téléchargements illimités, rien à compter
+    // Premium actif → téléchargements illimités
     if (user.isPremiumActive()) {
       return res.json({ allowed: true, remaining: null });
+    }
+
+    // Crédits ponctuels (pack) disponibles → on les consomme en priorité
+    if (user.extraDownloads > 0) {
+      user.extraDownloads -= 1;
+      await user.save();
+      return res.json({
+        allowed: true,
+        remaining: user.extraDownloads,
+        source: "pack",
+      });
     }
 
     if (user.downloadsUsed >= FREE_DOWNLOAD_LIMIT) {
