@@ -21,13 +21,13 @@ const Hero = () => {
               href="#"
               className="text-sm font-medium hover:text-green-600 transition"
             >
-              Home
+              Accueil
             </a>
             <a
               href="#features"
               className="text-sm font-medium hover:text-green-600 transition"
             >
-              Features
+              Fonctionnalités
             </a>
 
             <a
@@ -87,10 +87,10 @@ const Hero = () => {
           }`}
         >
           <a href="#" className="text-white">
-            Home
+            Accueil
           </a>
           <a href="#features" className="text-white">
-            Features
+            Fonctionnalités
           </a>
 
           <a href="#contact" className="text-white">
@@ -127,7 +127,7 @@ const Hero = () => {
               to="/app"
               className="bg-green-500 hover:bg-green-600 text-white rounded-full px-9 h-12 m-1 ring-offset-2 ring-1 ring-green-400 flex items-center transition-colors"
             >
-              Get started
+              commencer
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
