@@ -6,78 +6,51 @@ const Footer = () => {
       <>
         <footer className="flex flex-wrap justify-center lg:justify-between overflow-hidden gap-10 md:gap-20 py-16 px-6 md:px-16 lg:px-24 xl:px-32 text-[13px] text-gray-500 bg-gradient-to-r from-white via-green-200/60 to-white mt-40">
           <div className="flex flex-wrap items-start gap-10 md:gap-[60px] xl:gap-[140px]">
-            <a href="#">
+            <a href="/">
               <img src="/logo1.svg" alt="logo" className=" h-36 w-auto" />
             </a>
             <div>
-              <p className="text-slate-800 font-semibold">Product</p>
+              <p className="text-slate-800 font-semibold">Produit</p>
               <ul className="mt-2 space-y-2">
                 <li>
                   <a href="/" className="hover:text-green-600 transition">
-                    Home
+                    Accueil
                   </a>
                 </li>
                 <li>
-                  <a href="/" className="hover:text-green-600 transition">
-                    Support
+                  <a
+                    href="/#features"
+                    className="hover:text-green-600 transition"
+                  >
+                    Fonctionnalités
                   </a>
                 </li>
                 <li>
-                  <a href="/" className="hover:text-green-600 transition">
-                    Pricing
+                  <a
+                    href="/app/pricing"
+                    className="hover:text-green-600 transition"
+                  >
+                    Tarifs
                   </a>
                 </li>
                 <li>
-                  <a href="/" className="hover:text-green-600 transition">
-                    Affiliate
+                  <a href="/#cta" className="hover:text-green-600 transition">
+                    Contact
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <p className="text-slate-800 font-semibold">Resources</p>
+              <p className="text-slate-800 font-semibold">Légal</p>
               <ul className="mt-2 space-y-2">
                 <li>
                   <a href="/" className="hover:text-green-600 transition">
-                    Company
+                    Confidentialité
                   </a>
                 </li>
                 <li>
                   <a href="/" className="hover:text-green-600 transition">
-                    Blogs
-                  </a>
-                </li>
-                <li>
-                  <a href="/" className="hover:text-green-600 transition">
-                    Community
-                  </a>
-                </li>
-                <li>
-                  <a href="/" className="hover:text-green-600 transition">
-                    Careers
-                    <span className="text-xs text-white bg-green-600 rounded-md ml-2 px-2 py-1">
-                      We’re hiring!
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/" className="hover:text-green-600 transition">
-                    About
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p className="text-slate-800 font-semibold">Legal</p>
-              <ul className="mt-2 space-y-2">
-                <li>
-                  <a href="/" className="hover:text-green-600 transition">
-                    Privacy
-                  </a>
-                </li>
-                <li>
-                  <a href="/" className="hover:text-green-600 transition">
-                    Terms
+                    Conditions d'utilisation
                   </a>
                 </li>
               </ul>
@@ -85,8 +58,8 @@ const Footer = () => {
           </div>
           <div className="flex flex-col max-md:items-center max-md:text-center gap-2 items-end">
             <p className="max-w-60">
-              Making every customer feel valued—no matter the size of your
-              audience.
+              Aidez chaque candidat à décrocher l'emploi de ses rêves, un CV à
+              la fois.
             </p>
             <div className="flex items-center gap-4 mt-3">
               <a href="https://dribbble.com/" target="_blank" rel="noreferrer">
