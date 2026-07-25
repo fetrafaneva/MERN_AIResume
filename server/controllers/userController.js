@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Resume from "../models/Resume.js";
 import { FREE_DOWNLOAD_LIMIT } from "../configs/plans.js";
+import { transporter } from "../configs/mailer.js";
 
 const generateToken = (userId) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
@@ -163,4 +164,24 @@ export const dismissActivationNotice = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
+};
+
+const sendOtpEmail = async (email, name, otp) => {
+  await transporter.sendMail({
+    from: `"AIResume" <${process.env.GMAIL_USER}>`,
+    to: email,
+    subject: "Votre code de vérification AIResume",
+    html: `
+      <div style="font-family: sans-serif; max-width: 480px; margin: auto;">
+        <h2 style="color: #16a34a;">Bonjour ${name},</h2>
+        <p>Voici votre code de vérification pour activer votre compte AIResume :</p>
+        <p style="font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #15803d; text-align: center; padding: 16px; background: #f0fdf4; border-radius: 8px;">
+          ${otp}
+        </p>
+        <p style="color: #64748b; font-size: 13px;">
+          Ce code expire dans 10 minutes. Si vous n'êtes pas à l'origine de cette demande, ignorez cet email.
+        </p>
+      </div>
+    `,
+  });
 };
