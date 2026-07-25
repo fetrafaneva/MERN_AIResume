@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Resume from "../models/Resume.js";
 import { FREE_DOWNLOAD_LIMIT } from "../configs/plans.js";
-import { resend } from "../configs/resend.js";
+import { transporter } from "../configs/mailer.js";
 
 const generateToken = (userId) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
