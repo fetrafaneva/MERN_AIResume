@@ -17,8 +17,8 @@ const generateOtp = () => {
 };
 
 const sendOtpEmail = async (email, name, otp) => {
-  await resend.emails.send({
-    from: "AIResume <onboarding@resend.dev>", // à remplacer par ton domaine vérifié en prod
+  await transporter.sendMail({
+    from: `"AIResume" <${process.env.GMAIL_USER}>`,
     to: email,
     subject: "Votre code de vérification AIResume",
     html: `
