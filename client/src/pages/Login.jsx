@@ -1,5 +1,6 @@
-import { Lock, Mail, User2Icon } from "lucide-react";
+import { Lock, Mail, User2Icon, ShieldCheckIcon } from "lucide-react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../configs/api";
 import { useDispatch } from "react-redux";
 import { login } from "../app/features/authSlice";
@@ -7,17 +8,20 @@ import toast from "react-hot-toast";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const query = new URLSearchParams(window.location.search);
   const urlState = query.get("state");
 
   const [state, setState] = React.useState(urlState || "login");
   const [loading, setLoading] = React.useState(false);
+  const [resending, setResending] = React.useState(false);
 
   const [formData, setFormData] = React.useState({
     name: "",
     email: "",
     password: "",
   });
+  const [otp, setOtp] = React.useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,13 +30,65 @@ const Login = () => {
     setLoading(true);
     try {
       const { data } = await api.post(`/api/users/${state}`, formData);
+
+      if (state === "register") {
+        toast.success(data.message);
+        setState("otp");
+      } else {
+        dispatch(login(data));
+        localStorage.setItem("token", data.token);
+        toast.success(data.message);
+        navigate("/app");
+      }
+    } catch (error) {
+      const responseData = error?.response?.data;
+
+      if (responseData?.needsVerification) {
+        toast(responseData.message);
+        setState("otp");
+        return;
+      }
+
+      toast(responseData?.message || error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    if (loading) return;
+
+    setLoading(true);
+    try {
+      const { data } = await api.post("/api/users/verify-otp", {
+        email: formData.email,
+        otp,
+      });
       dispatch(login(data));
       localStorage.setItem("token", data.token);
       toast.success(data.message);
+      navigate("/app");
     } catch (error) {
-      toast(error?.response?.data?.message || error.message);
+      toast.error(error?.response?.data?.message || error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    if (resending) return;
+
+    setResending(true);
+    try {
+      const { data } = await api.post("/api/users/resend-otp", {
+        email: formData.email,
+      });
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message);
+    } finally {
+      setResending(false);
     }
   };
 
@@ -41,6 +97,79 @@ const Login = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Écran de vérification OTP
+  if (state === "otp") {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <form
+          onSubmit={handleVerifyOtp}
+          className="sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white py-10"
+        >
+          <div className="mx-auto mb-4 size-14 rounded-full bg-green-50 flex items-center justify-center">
+            <ShieldCheckIcon className="size-7 text-green-600" />
+          </div>
+          <h1 className="text-gray-900 text-2xl font-medium">
+            Vérifiez votre email
+          </h1>
+          <p className="text-gray-500 text-sm mt-2">
+            Un code à 6 chiffres a été envoyé à{" "}
+            <span className="font-medium text-gray-700">{formData.email}</span>
+          </p>
+
+          <div className="flex items-center mt-6 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
+            <input
+              type="text"
+              inputMode="numeric"
+              maxLength={6}
+              placeholder="Code à 6 chiffres"
+              className="border-none outline-none ring-0 w-full text-center tracking-[6px]"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+              required
+              disabled={loading}
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading || otp.length !== 6}
+            className="mt-6 w-full h-11 rounded-full text-white bg-green-500 hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            {loading ? (
+              <>
+                <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                Vérification...
+              </>
+            ) : (
+              "Vérifier"
+            )}
+          </button>
+
+          <p className="text-gray-500 text-sm mt-4 mb-2">
+            Vous n'avez rien reçu ?{" "}
+            <button
+              type="button"
+              onClick={handleResendOtp}
+              disabled={resending}
+              className="text-green-500 hover:underline disabled:opacity-60"
+            >
+              {resending ? "Envoi..." : "Renvoyer le code"}
+            </button>
+          </p>
+
+          <p
+            onClick={() => !loading && setState("login")}
+            className={`text-gray-400 text-xs mt-2 mb-8 cursor-pointer hover:underline ${
+              loading ? "opacity-60 pointer-events-none" : ""
+            }`}
+          >
+            Retour à la connexion
+          </p>
+        </form>
+      </div>
+    );
+  }
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <form
@@ -48,16 +177,19 @@ const Login = () => {
         className="sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white"
       >
         <h1 className="text-gray-900 text-3xl mt-10 font-medium">
-          {state === "login" ? "Login" : "Sign up"}
+          {state === "login" ? "Connexion" : "Inscription"}
         </h1>
-        <p className="text-gray-500 text-sm mt-2">Please {state} to continue</p>
+        <p className="text-gray-500 text-sm mt-2">
+          Veuillez {state === "login" ? "vous connecter" : "vous inscrire"} pour
+          continuer
+        </p>
         {state !== "login" && (
           <div className="flex items-center mt-6 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
             <User2Icon size={16} color="#6B7280" />
             <input
               type="text"
               name="name"
-              placeholder="Name"
+              placeholder="Nom"
               className="border-none outline-none ring-0"
               value={formData.name}
               onChange={handleChange}
@@ -71,7 +203,7 @@ const Login = () => {
           <input
             type="email"
             name="email"
-            placeholder="Email id"
+            placeholder="Adresse email"
             className="border-none outline-none ring-0"
             value={formData.email}
             onChange={handleChange}
@@ -84,7 +216,7 @@ const Login = () => {
           <input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="Mot de passe"
             className="border-none outline-none ring-0"
             value={formData.password}
             onChange={handleChange}
@@ -94,7 +226,7 @@ const Login = () => {
         </div>
         <div className="mt-4 text-left text-green-500">
           <button className="text-sm" type="reset" disabled={loading}>
-            Forget password?
+            Mot de passe oublié ?
           </button>
         </div>
         <button
@@ -108,9 +240,9 @@ const Login = () => {
               {state === "login" ? "Connexion..." : "Inscription..."}
             </>
           ) : state === "login" ? (
-            "Login"
+            "Connexion"
           ) : (
-            "Sign up"
+            "S'inscrire"
           )}
         </button>
         <p
@@ -124,10 +256,10 @@ const Login = () => {
           }`}
         >
           {state === "login"
-            ? "Don't have an account?"
-            : "Already have an account?"}{" "}
+            ? "Vous n'avez pas de compte ?"
+            : "Vous avez déjà un compte ?"}{" "}
           <a href="#" className="text-green-500 hover:underline">
-            click here
+            cliquez ici
           </a>
         </p>
       </form>
