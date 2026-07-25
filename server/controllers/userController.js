@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Resume from "../models/Resume.js";
 import { FREE_DOWNLOAD_LIMIT } from "../configs/plans.js";
-import { resend } from "../configs/resend.js";
+import { transporter } from "../configs/mailer.js";
 
 const generateToken = (userId) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
@@ -17,8 +17,8 @@ const generateOtp = () => {
 };
 
 const sendOtpEmail = async (email, name, otp) => {
-  await resend.emails.send({
-    from: "AIResume <onboarding@resend.dev>", // à remplacer par ton domaine vérifié en prod
+  await transporter.sendMail({
+    from: `"AIResume" <${process.env.GMAIL_USER}>`,
     to: email,
     subject: "Votre code de vérification AIResume",
     html: `
