@@ -20,7 +20,7 @@ const PasserPremium = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const selectedPlan = location.state?.plan || "";
-  const [selectedProvider, setSelectedProvider] = useState("");
+  const [selectedProvider, setSelectedProvider] = useState("mvola");
   const [senderPhone, setSenderPhone] = useState("");
   const [transactionRef, setTransactionRef] = useState("");
 
