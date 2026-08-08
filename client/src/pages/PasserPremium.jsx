@@ -88,7 +88,7 @@ const PasserPremium = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-4 text-center">
         <h1 className="text-3xl font-semibold text-green-600 mb-2">
-          Vous êtes déjà Premium 🎉
+          Vous êtes déjà Premium
         </h1>
         <p className="text-slate-600">
           Profitez de toutes les fonctionnalités sans limite.
