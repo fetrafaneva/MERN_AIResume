@@ -64,12 +64,20 @@ const Navbar = () => {
           )}
 
           {user?.role === "admin" && (
-            <Link
-              to="/app/admin/payments"
-              className="text-xs text-slate-500 hover:text-slate-700 underline underline-offset-2"
-            >
-              Admin
-            </Link>
+            <div className="flex gap-2">
+              <Link
+                to="/app/admin/payments"
+                className="text-xs text-slate-500 hover:text-slate-700 underline underline-offset-2"
+              >
+                Paiements
+              </Link>
+              <Link
+                to="/app/admin/users"
+                className="text-xs text-slate-500 hover:text-slate-700 underline underline-offset-2"
+              >
+                Comptes
+              </Link>
+            </div>
           )}
 
           <button
